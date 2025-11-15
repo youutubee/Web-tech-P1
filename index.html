@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoyageFlow — Interactive Travel Experience Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .custom-checkbox {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #9ca3af;
+            border-radius: 6px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .custom-checkbox:checked {
+            background: linear-gradient(to right, #a78bfa, #ec4899);
+            border-color: #a78bfa;
+        }
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+        }
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            animation: slideIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .input-error {
+            border-color: #ef4444 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Registration Form -->
+    <div id="page1" class="page active">
+        <div class="bg-gradient-to-r from-blue-100 to-pink-100 min-h-screen flex justify-center items-center p-6">
+            <div class="bg-white/30 backdrop-blur-lg rounded-xl p-8 max-w-md w-full shadow-2xl">
+                <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Welcome to VoyageFlow</h1>
+                <form id="registrationForm" class="space-y-6">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Full Name</label>
+                        <input type="text" id="fullName" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition duration-300 bg-transparent" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                        <input type="tel" id="phoneNumber" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition duration-300 bg-transparent" placeholder="10 digits only" required>
+                        <span class="error-message" id="phoneError">Phone number must be exactly 10 digits</span>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">PIN Code</label>
+                        <input type="text" id="pinCode" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition duration-300 bg-transparent" placeholder="6 digits only" required>
+                        <span class="error-message" id="pinError">PIN code must be exactly 6 digits</span>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Email Address</label>
+                        <input type="email" id="email" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition duration-300 bg-transparent" placeholder="user@domain.com" required>
+                        <span class="error-message" id="emailError">Please enter a valid email address</span>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-105 transition-transform rounded-lg shadow-lg px-6 py-3 text-white font-semibold">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
+            <div class="text-center">
+                <div class="text-6xl mb-4">✅</div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Registration Successful!</h2>
+                <p class="text-gray-600 mb-6">Welcome to VoyageFlow. Let's start your journey!</p>
+                <button id="modalCloseBtn" class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-105 transition-transform rounded-lg shadow-lg px-6 py-3 text-white font-semibold">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: Travel Blog & Destination Showcase -->
+    <div id="page2" class="page">
+        <div class="bg-gradient-to-b from-green-100 to-blue-100 min-h-screen">
+            <!-- Sticky Navigation -->
+            <nav class="sticky top-0 bg-white/30 backdrop-blur-sm flex justify-center space-x-8 px-10 py-4 z-20 shadow-sm">
+                <a href="#paris" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600" data-section="paris">Paris</a>
+                <a href="#tokyo" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600" data-section="tokyo">Tokyo</a>
+                <a href="#rome" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600" data-section="rome">Rome</a>
+                <a href="#bali" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600" data-section="bali">Bali</a>
+                <a href="#santorini" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600" data-section="santorini">Santorini</a>
+            </nav>
+
+            <!-- Blog Sections -->
+            <section id="paris" class="relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920');">
+                <div class="bg-black bg-opacity-40 rounded-lg max-w-xl p-8">
+                    <h2 class="text-5xl font-extrabold mb-4">Paris, France</h2>
+                    <p class="text-lg mb-6">The City of Light awaits you with its iconic Eiffel Tower, world-class museums, and charming streets. Experience the romance of Montmartre and the elegance of the Champs-Élysées.</p>
+                    <p class="text-base opacity-90">From art galleries to exquisite cuisine, Paris offers an unforgettable cultural journey.</p>
+                </div>
+            </section>
+
+            <section id="tokyo" class="relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1920');">
+                <div class="bg-black bg-opacity-40 rounded-lg max-w-xl p-8">
+                    <h2 class="text-5xl font-extrabold mb-4">Tokyo, Japan</h2>
+                    <p class="text-lg mb-6">A mesmerizing blend of ancient traditions and cutting-edge technology. Explore vibrant neighborhoods, savor authentic sushi, and witness the beauty of cherry blossoms.</p>
+                    <p class="text-base opacity-90">From serene temples to neon-lit streets, Tokyo is a city of contrasts and endless discoveries.</p>
+                </div>
+            </section>
+
+            <section id="rome" class="relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1529260830199-42c24126f198?w=1920');">
+                <div class="bg-black bg-opacity-40 rounded-lg max-w-xl p-8">
+                    <h2 class="text-5xl font-extrabold mb-4">Rome, Italy</h2>
+                    <p class="text-lg mb-6">Step into history as you wander through ancient ruins, magnificent churches, and piazzas. Indulge in authentic Italian cuisine and gelato while exploring the Eternal City.</p>
+                    <p class="text-base opacity-90">Every corner tells a story in this timeless city where past and present coexist beautifully.</p>
+                </div>
+            </section>
+
+            <section id="bali" class="relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1920');">
+                <div class="bg-black bg-opacity-40 rounded-lg max-w-xl p-8">
+                    <h2 class="text-5xl font-extrabold mb-4">Bali, Indonesia</h2>
+                    <p class="text-lg mb-6">Tropical paradise with stunning beaches, lush rice terraces, and rich cultural heritage. Experience world-class resorts, ancient temples, and breathtaking sunsets.</p>
+                    <p class="text-base opacity-90">A perfect blend of relaxation, adventure, and spiritual rejuvenation awaits in Bali.</p>
+                </div>
+            </section>
+
+            <section id="santorini" class="relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=1920');">
+                <div class="bg-black bg-opacity-40 rounded-lg max-w-xl p-8">
+                    <h2 class="text-5xl font-extrabold mb-4">Santorini, Greece</h2>
+                    <p class="text-lg mb-6">White-washed buildings perched on cliffs overlooking the azure Aegean Sea. Enjoy spectacular sunsets, pristine beaches, and exquisite Mediterranean cuisine.</p>
+                    <p class="text-base opacity-90 mb-8">A romantic island destination that promises unforgettable memories and stunning vistas.</p>
+                </div>
+            </section>
+
+            <!-- Next Button -->
+            <div class="fixed bottom-10 right-10">
+                <button id="nextToPage3" class="rounded-full p-4 bg-gradient-to-r from-green-400 to-blue-500 shadow-lg hover:brightness-110 transition text-white font-bold text-lg">
+                    Next →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 3: Trip Itinerary & Price Calculator -->
+    <div id="page3" class="page">
+        <div class="bg-white min-h-screen py-12 px-6 pb-32">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl font-extrabold text-center mb-12 text-gray-800">Plan Your Trip</h1>
+                
+                <!-- Travel Options -->
+                <div class="shadow-lg rounded-xl p-8 max-w-3xl mx-auto mb-8 bg-gradient-to-br from-blue-50 to-indigo-50">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800">Travel Options</h2>
+                    <div class="space-y-4">
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="500" data-category="travel" value="economy">
+                                <span class="font-medium text-gray-700">Economy Flight</span>
+                            </div>
+                            <span class="font-semibold text-indigo-600">$500</span>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="1200" data-category="travel" value="business">
+                                <span class="font-medium text-gray-700">Business Class Flight</span>
+                            </div>
+                            <span class="font-semibold text-indigo-600">$1,200</span>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="2500" data-category="travel" value="first">
+                                <span class="font-medium text-gray-700">First Class Flight</span>
+                            </div>
+                            <span class="font-semibold text-indigo-600">$2,500</span>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="300" data-category="travel" value="train">
+                                <span class="font-medium text-gray-700">High-Speed Train</span>
+                            </div>
+                            <span class="font-semibold text-indigo-600">$300</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Food Packages -->
+                <div class="shadow-lg rounded-xl p-8 max-w-3xl mx-auto mb-8 bg-gradient-to-br from-pink-50 to-rose-50">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800">Food Packages</h2>
+                    <div class="space-y-4">
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="150" data-category="food" value="local">
+                                <span class="font-medium text-gray-700">Local Food Tour</span>
+                            </div>
+                            <span class="font-semibold text-rose-600">$150</span>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="250" data-category="food" value="fine">
+                                <span class="font-medium text-gray-700">Fine Dining Experience</span>
+                            </div>
+                            <span class="font-semibold text-rose-600">$250</span>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="80" data-category="food" value="street">
+                                <span class="font-medium text-gray-700">Street Food Adventure</span>
+                            </div>
+                            <span class="font-semibold text-rose-600">$80</span>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="120" data-category="food" value="breakfast">
+                                <span class="font-medium text-gray-700">Daily Breakfast Buffet</span>
+                            </div>
+                            <span class="font-semibold text-rose-600">$120</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Activities -->
+                <div class="shadow-lg rounded-xl p-8 max-w-3xl mx-auto mb-8 bg-gradient-to-br from-purple-50 to-violet-50">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800">Activities</h2>
+                    <div class="space-y-4">
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="200" data-category="activity" value="sightseeing">
+                                <span class="font-medium text-gray-700">City Sightseeing Tour</span>
+                            </div>
+                            <span class="font-semibold text-violet-600">$200</span>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="350" data-category="activity" value="adventure">
+                                <span class="font-medium text-gray-700">Adventure Activities Package</span>
+                            </div>
+                            <span class="font-semibold text-violet-600">$350</span>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="180" data-category="activity" value="museum">
+                                <span class="font-medium text-gray-700">Museum & Gallery Pass</span>
+                            </div>
+                            <span class="font-semibold text-violet-600">$180</span>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/50 rounded-lg transition">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="custom-checkbox" data-price="400" data-category="activity" value="spa">
+                                <span class="font-medium text-gray-700">Spa & Wellness Retreat</span>
+                            </div>
+                            <span class="font-semibold text-violet-600">$400</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Confirm Button -->
+                <div class="max-w-3xl mx-auto">
+                    <button id="confirmBooking" class="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:shadow-lg transition font-bold text-white rounded-lg py-4 text-lg">
+                        Confirm Booking
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Total Price Footer -->
+        <div class="fixed bottom-0 w-full bg-white shadow-2xl py-4 px-6 border-t-4 border-gradient-to-r from-purple-500 to-pink-600" style="border-image: linear-gradient(to right, #a855f7, #ec4899) 1;">
+            <div class="max-w-4xl mx-auto flex justify-between items-center">
+                <span class="text-xl font-semibold text-gray-700">Total Price:</span>
+                <span id="totalPrice" class="text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">$0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
+            <div class="text-center">
+                <div class="text-6xl mb-4">🎉</div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Booking Confirmed!</h2>
+                <p class="text-gray-600 mb-2">Your trip has been successfully planned.</p>
+                <p id="finalPrice" class="text-2xl font-bold text-purple-600 mb-6">Total: $0</p>
+                <button id="modalConfirmBtn" class="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:shadow-lg transition font-bold text-white rounded-lg py-3">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 4: Confirmation / Thank You Page -->
+    <div id="page4" class="page">
+        <div class="min-h-screen flex items-center justify-center bg-gradient-to-tr from-pink-300 via-purple-300 to-indigo-400 p-6">
+            <div class="bg-white/90 backdrop-blur-md rounded-3xl p-12 text-center max-w-lg drop-shadow-lg">
+                <div class="text-6xl mb-6">✈️</div>
+                <h1 class="text-4xl font-extrabold text-purple-700 mb-6">Thank You!</h1>
+                <p class="text-gray-700 text-lg mb-8">Your travel experience has been successfully simulated. We hope you enjoyed your journey through VoyageFlow!</p>
+                <p class="text-gray-600 mb-8">Your booking simulation is complete. Ready to plan another adventure?</p>
+                
+                <button id="startOverBtn" class="border-2 border-purple-600 rounded-full px-8 py-3 text-purple-600 font-semibold hover:bg-purple-600 hover:text-white transition-transform hover:scale-105 mb-8">
+                    Start Over
+                </button>
+                
+                <div class="flex justify-center space-x-8 mt-8 text-gray-600">
+                    <a href="#" class="hover:text-purple-700 transition text-3xl" title="Facebook">📘</a>
+                    <a href="#" class="hover:text-purple-700 transition text-3xl" title="Twitter">🐦</a>
+                    <a href="#" class="hover:text-purple-700 transition text-3xl" title="Instagram">📷</a>
+                    <a href="#" class="hover:text-purple-700 transition text-3xl" title="LinkedIn">💼</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Page 1: Registration Form Validation
+        const registrationForm = document.getElementById('registrationForm');
+        const phoneInput = document.getElementById('phoneNumber');
+        const pinInput = document.getElementById('pinCode');
+        const emailInput = document.getElementById('email');
+        const phoneError = document.getElementById('phoneError');
+        const pinError = document.getElementById('pinError');
+        const emailError = document.getElementById('emailError');
+        const successModal = document.getElementById('successModal');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+        function validatePhone(phone) {
+            return /^\d{10}$/.test(phone);
+        }
+
+        function validatePIN(pin) {
+            return /^\d{6}$/.test(pin);
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showError(input, errorElement, message) {
+            input.classList.add('input-error');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function clearError(input, errorElement) {
+            input.classList.remove('input-error');
+            errorElement.classList.remove('show');
+        }
+
+        phoneInput.addEventListener('input', () => {
+            if (phoneInput.value && !validatePhone(phoneInput.value)) {
+                showError(phoneInput, phoneError, 'Phone number must be exactly 10 digits');
+            } else {
+                clearError(phoneInput, phoneError);
+            }
+        });
+
+        pinInput.addEventListener('input', () => {
+            if (pinInput.value && !validatePIN(pinInput.value)) {
+                showError(pinInput, pinError, 'PIN code must be exactly 6 digits');
+            } else {
+                clearError(pinInput, pinError);
+            }
+        });
+
+        emailInput.addEventListener('input', () => {
+            if (emailInput.value && !validateEmail(emailInput.value)) {
+                showError(emailInput, emailError, 'Please enter a valid email address');
+            } else {
+                clearError(emailInput, emailError);
+            }
+        });
+
+        registrationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            let isValid = true;
+            
+            // Clear previous errors
+            clearError(phoneInput, phoneError);
+            clearError(pinInput, pinError);
+            clearError(emailInput, emailError);
+            
+            // Validate all fields
+            if (!validatePhone(phoneInput.value)) {
+                showError(phoneInput, phoneError, 'Phone number must be exactly 10 digits');
+                isValid = false;
+            }
+            
+            if (!validatePIN(pinInput.value)) {
+                showError(pinInput, pinError, 'PIN code must be exactly 6 digits');
+                isValid = false;
+            }
+            
+            if (!validateEmail(emailInput.value)) {
+                showError(emailInput, emailError, 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                successModal.classList.add('active');
+            }
+        });
+
+        modalCloseBtn.addEventListener('click', () => {
+            successModal.classList.remove('active');
+            showPage('page2');
+        });
+
+        // Page 2: Smooth Scrolling and Navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('data-section');
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Update active nav link
+                    navLinks.forEach(l => l.classList.remove('border-green-400'));
+                    link.classList.add('border-green-400');
+                }
+            });
+        });
+
+        document.getElementById('nextToPage3').addEventListener('click', () => {
+            showPage('page3');
+        });
+
+        // Page 3: Price Calculator
+        const checkboxes = document.querySelectorAll('.custom-checkbox');
+        const totalPriceElement = document.getElementById('totalPrice');
+        const confirmModal = document.getElementById('confirmModal');
+        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+        const finalPriceElement = document.getElementById('finalPrice');
+        const confirmBookingBtn = document.getElementById('confirmBooking');
+
+        function calculateTotal() {
+            let total = 0;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    total += parseFloat(checkbox.getAttribute('data-price'));
+                }
+            });
+            totalPriceElement.textContent = `$${total.toLocaleString()}`;
+            return total;
+        }
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                calculateTotal();
+            });
+        });
+
+        confirmBookingBtn.addEventListener('click', () => {
+            const total = calculateTotal();
+            finalPriceElement.textContent = `Total: $${total.toLocaleString()}`;
+            confirmModal.classList.add('active');
+        });
+
+        modalConfirmBtn.addEventListener('click', () => {
+            confirmModal.classList.remove('active');
+            showPage('page4');
+        });
+
+        // Page 4: Start Over
+        document.getElementById('startOverBtn').addEventListener('click', () => {
+            // Reset form
+            registrationForm.reset();
+            clearError(phoneInput, phoneError);
+            clearError(pinInput, pinError);
+            clearError(emailInput, emailError);
+            
+            // Reset checkboxes and price
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            calculateTotal();
+            
+            // Go back to page 1
+            showPage('page1');
+        });
+
+        // Initialize total price
+        calculateTotal();
+    </script>
+</body>
+</html>
