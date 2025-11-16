@@ -37,11 +37,35 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <ul class="navbar-nav">
-                    <li><a class="nav-link" href="#page1">Home</a></li>
-                    <li><a class="nav-link" href="#page2">Destinations</a></li>
-                    <li><a class="nav-link" href="#page2b">Select</a></li>
-                    <li><a class="nav-link" href="#page3">Plan</a></li>
-                    <li><a class="nav-link" href="#page4">Review</a></li>
+                    <li><a class="nav-link" href="#page1" onclick="showPage('page1')">Home</a></li>
+                    <li class="nav-dropdown">
+                        <a class="nav-dropdown-toggle" href="javascript:void(0)">
+                            Destinations <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="nav-dropdown-menu">
+                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="showPage('page2')">Browse All</a>
+                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="showPage('page2b')">Select Destination</a>
+                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('paris')">Paris</a>
+                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('tokyo')">Tokyo</a>
+                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('rome')">Rome</a>
+                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('bali')">Bali</a>
+                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('santorini')">Santorini</a>
+                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('dubai')">Dubai</a>
+                        </div>
+                    </li>
+                    <li class="nav-dropdown">
+                        <a class="nav-dropdown-toggle" href="javascript:void(0)">
+                            Plans <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="nav-dropdown-menu">
+                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="showPage('page3')">Plan Your Trip</a>
+                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="showPage('page2b')">Choose Destination</a>
+                            <a class="nav-dropdown-item" href="javascript:void(0)">Travel Packages</a>
+                            <a class="nav-dropdown-item" href="javascript:void(0)">Custom Itinerary</a>
+                        </div>
+                    </li>
+                    <li><a class="nav-link" href="#page3" onclick="showPage('page3')">Calculator</a></li>
+                    <li><a class="nav-link" href="#page4" onclick="showPage('page4')">Review</a></li>
                 </ul>
             </div>
         </div>
@@ -90,34 +114,49 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6">
-                        <div class="card">
-                            <div class="card-body p-4">
+                        <div class="card registration-card">
+                            <div class="card-body p-5">
+                                <div class="text-center mb-4">
+                                    <i class="fas fa-user-circle" style="font-size: 48px; color: var(--primary-color); margin-bottom: 15px;"></i>
+                                    <h3 style="color: var(--text-color); margin-bottom: 8px;">Create Your Account</h3>
+                                    <p class="text-muted">Fill in your details to get started</p>
+                                </div>
                                 <form id="registrationForm">
                                     <div class="form-group">
-                                        <label class="form-label" for="fullName">Full Name</label>
+                                        <label class="form-label" for="fullName">
+                                            <i class="fas fa-user"></i> Full Name
+                                        </label>
                                         <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
                                         <span class="error-message" id="nameError"></span>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label class="form-label" for="phoneNumber">Phone Number</label>
+                                        <label class="form-label" for="phoneNumber">
+                                            <i class="fas fa-phone"></i> Phone Number
+                                        </label>
                                         <input type="tel" class="form-control" id="phoneNumber" placeholder="10 digits only" required>
                                         <span class="error-message" id="phoneError"></span>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label class="form-label" for="pinCode">PIN Code</label>
+                                        <label class="form-label" for="pinCode">
+                                            <i class="fas fa-lock"></i> PIN Code
+                                        </label>
                                         <input type="text" class="form-control" id="pinCode" placeholder="6 digits only" required>
                                         <span class="error-message" id="pinError"></span>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label class="form-label" for="email">Email Address</label>
+                                        <label class="form-label" for="email">
+                                            <i class="fas fa-envelope"></i> Email Address
+                                        </label>
                                         <input type="email" class="form-control" id="email" placeholder="user@domain.com" required>
                                         <span class="error-message" id="emailError"></span>
                                     </div>
                                     
-                                    <button type="submit" class="btn-primary btn-submit w-100">Submit & Continue</button>
+                                    <button type="submit" class="btn-primary btn-submit w-100 mt-3">
+                                        <i class="fas fa-arrow-right"></i> Submit & Continue
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -319,6 +358,29 @@
                 
                 <!-- Destination Banner -->
                 <div class="destination-banner mb-4"></div>
+
+                <!-- People Selector -->
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4"><i class="fas fa-users"></i> Number of Travelers</h3>
+                        <div class="people-selector">
+                            <div class="form-group">
+                                <label class="form-label" for="numPeople">How many people are traveling?</label>
+                                <div class="people-input-group">
+                                    <button class="btn-people-decrease" type="button">-</button>
+                                    <input type="number" class="form-control text-center" id="numPeople" value="1" min="1" max="10" readonly>
+                                    <button class="btn-people-increase" type="button">+</button>
+                                </div>
+                                <div id="peopleWarning" class="alert alert-warning mt-3 d-none">
+                                    <i class="fas fa-exclamation-triangle"></i> For groups of 6+ people, please contact us for custom packages. Limited customization available.
+                                </div>
+                                <div id="ticketChecker" class="ticket-checker mt-3">
+                                    <small class="text-muted"><i class="fas fa-info-circle"></i> Maximum 4 flight tickets can be selected per booking</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Accommodation -->
                 <div class="card mb-4">
@@ -540,6 +602,7 @@
     <script src="js/pages/registration.js"></script>
     <script src="js/pages/blog.js"></script>
     <script src="js/pages/destination-selection.js"></script>
+    <script src="js/pages/people-selector.js"></script>
     <script src="js/pages/calculator.js"></script>
     <script src="js/pages/review.js"></script>
     <script src="js/pages/thankyou.js"></script>
@@ -568,6 +631,9 @@
                                     <span class="destination-price">From ${formatCurrency(dest.basePrice)}</span>
                                     <span class="destination-rating">⭐ 4.8</span>
                                 </div>
+                                <button class="btn-select-destination btn-primary btn-sm" data-destination="${key}">
+                                    <i class="fas fa-check"></i> Select
+                                </button>
                             </div>
                         </div>
                     `;

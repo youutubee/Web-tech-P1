@@ -8,16 +8,35 @@ function initDestinationSelection() {
     // Wait a bit for cards to be populated
     setTimeout(() => {
         const destinationCards = document.querySelectorAll('.destination-card');
+        const selectButtons = document.querySelectorAll('.btn-select-destination');
         const nextBtn = document.getElementById('nextToPage3');
 
-        destinationCards.forEach(card => {
-            card.addEventListener('click', () => {
+        // Handle select button clicks
+        selectButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                const destination = button.getAttribute('data-destination');
+                
                 // Remove previous selection
-                destinationCards.forEach(c => c.classList.remove('selected'));
+                destinationCards.forEach(c => {
+                    c.classList.remove('selected');
+                    const btn = c.querySelector('.btn-select-destination');
+                    if (btn) {
+                        btn.classList.remove('selected');
+                        btn.innerHTML = '<i class="fas fa-check"></i> Select';
+                    }
+                });
                 
                 // Add selection to clicked card
-                card.classList.add('selected');
-                selectedDestination = card.getAttribute('data-destination');
+                const card = button.closest('.destination-card');
+                if (card) {
+                    card.classList.add('selected');
+                    button.classList.add('selected');
+                    button.innerHTML = '<i class="fas fa-check-circle"></i> Selected';
+                }
+                
+                selectedDestination = destination;
                 
                 // Store selected destination
                 storeData('selectedDestination', selectedDestination);
@@ -27,6 +46,19 @@ function initDestinationSelection() {
                     nextBtn.disabled = false;
                     nextBtn.classList.remove('disabled', 'btn-secondary');
                     nextBtn.classList.add('btn-primary');
+                }
+            });
+        });
+
+        // Also handle card clicks
+        destinationCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Don't trigger if clicking the button
+                if (e.target.closest('.btn-select-destination')) return;
+                
+                const button = card.querySelector('.btn-select-destination');
+                if (button) {
+                    button.click();
                 }
             });
         });

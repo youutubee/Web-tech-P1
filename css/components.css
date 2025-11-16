@@ -130,6 +130,17 @@
     background-color: var(--background-color);
 }
 
+.package-option.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--accent-color);
+}
+
+.package-option.disabled:hover {
+    transform: none;
+    border-color: var(--border-color);
+}
+
 .package-option:hover {
     background: linear-gradient(135deg, rgba(0, 188, 212, 0.05), rgba(0, 172, 193, 0.05));
     border-color: var(--primary-color);
@@ -458,6 +469,92 @@
     box-shadow: 0 12px 35px rgba(0, 188, 212, 0.6);
 }
 
+/* Select Destination Button */
+.btn-select-destination {
+    width: 100%;
+    margin-top: 15px;
+    padding: 8px 16px;
+    font-size: 12px;
+}
+
+.btn-select-destination.selected {
+    background: linear-gradient(135deg, #4caf50, #45a049);
+}
+
+.btn-select-destination.selected:hover {
+    background: linear-gradient(135deg, #45a049, #388e3c);
+}
+
+/* People Selector */
+.people-selector {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.people-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-people-decrease,
+.btn-people-increase {
+    width: 45px;
+    height: 45px;
+    border: 2px solid var(--primary-color);
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-people-decrease:hover,
+.btn-people-increase:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.btn-people-decrease:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#numPeople {
+    flex: 1;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.ticket-checker {
+    padding: 12px;
+    background-color: rgba(0, 188, 212, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-color);
+}
+
+.ticket-checker.warning {
+    background-color: rgba(255, 152, 0, 0.1);
+    border-left-color: #ff9800;
+    color: #f57c00;
+}
+
+.ticket-checker.error {
+    background-color: rgba(229, 57, 53, 0.1);
+    border-left-color: #e53935;
+    color: #c62828;
+}
+
 /* Alert Styles */
 .alert {
     padding: 16px 20px;
@@ -471,6 +568,24 @@
     background-color: #e8f5e9;
     border-color: #4caf50;
     color: #2e7d32;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    border-color: #ffc107;
+    color: #856404;
+}
+
+/* Registration Card */
+.registration-card {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.registration-card .form-label i {
+    margin-right: 8px;
+    color: var(--primary-color);
+    width: 20px;
 }
 
 /* Responsive */
