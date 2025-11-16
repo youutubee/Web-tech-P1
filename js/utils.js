@@ -17,6 +17,19 @@ function updateProgressBar(currentPage, totalPages) {
     if (progressBar) {
         const progress = (currentPage / totalPages) * 100;
         progressBar.style.width = `${progress}%`;
+        progressBar.style.transition = 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    }
+}
+
+// Auto-update progress bar based on active page
+function updateProgressBarAuto() {
+    const pages = ['page1', 'page2', 'page2b', 'page3', 'page4', 'page5'];
+    const activePage = document.querySelector('.page.active');
+    if (activePage) {
+        const currentIndex = pages.indexOf(activePage.id);
+        if (currentIndex !== -1) {
+            updateProgressBar(currentIndex + 1, pages.length);
+        }
     }
 }
 
@@ -29,6 +42,8 @@ function showPage(pageId) {
     if (targetPage) {
         targetPage.classList.add('active');
         window.scrollTo(0, 0);
+        // Update progress bar
+        updateProgressBarAuto();
     }
 }
 

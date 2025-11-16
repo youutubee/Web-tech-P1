@@ -32,6 +32,23 @@ function initCalculatorPage() {
     if (pageTitle) {
         pageTitle.textContent = `Plan Your Trip to ${destination.name}`;
     }
+    
+    // Also update the subtitle
+    const pageSubtitle = document.querySelector('#page3 .section-title p');
+    if (pageSubtitle) {
+        pageSubtitle.textContent = `Customize your ${destination.name} experience`;
+    }
+    
+    // Show destination info banner
+    const destinationBanner = document.querySelector('#page3 .destination-banner');
+    if (destinationBanner) {
+        destinationBanner.innerHTML = `
+            <div class="alert alert-info" style="background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(0, 172, 193, 0.1)); border-color: var(--primary-color); color: var(--text-color);">
+                <strong><i class="fas fa-map-marker-alt"></i> Selected Destination:</strong> ${destination.name}
+                <br><small>${destination.description}</small>
+            </div>
+        `;
+    }
 
     // Render packages
     renderPackages(destination);

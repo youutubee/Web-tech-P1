@@ -117,7 +117,7 @@
                                         <span class="error-message" id="emailError"></span>
                                     </div>
                                     
-                                    <button type="submit" class="btn-primary w-100">Submit & Continue</button>
+                                    <button type="submit" class="btn-primary btn-submit w-100">Submit & Continue</button>
                                 </form>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
                 <i class="fas fa-check-circle" style="font-size: 64px; color: #00bcd4; margin-bottom: 20px;"></i>
                 <h2>Registration Successful!</h2>
                 <p class="mb-4">Welcome to VoyageFlow. Let's start your journey!</p>
-                <button id="modalCloseBtn" class="btn-primary">Continue</button>
+                <button id="modalCloseBtn" class="btn-primary btn-continue">Continue</button>
             </div>
         </div>
     </div>
@@ -282,7 +282,7 @@
         </section>
 
         <div class="fab">
-            <button id="nextToPage2b" class="btn-primary" style="border-radius: 50px; padding: 15px 30px;">
+            <button id="nextToPage2b" class="btn-primary btn-continue" style="border-radius: 50px; padding: 12px 24px;">
                 <i class="fas fa-arrow-right"></i> Select Destination
             </button>
         </div>
@@ -316,6 +316,9 @@
                     <h2 class="page-title">Plan Your Trip</h2>
                     <p>Customize your travel experience</p>
                 </div>
+                
+                <!-- Destination Banner -->
+                <div class="destination-banner mb-4"></div>
 
                 <!-- Accommodation -->
                 <div class="card mb-4">
@@ -361,7 +364,7 @@
 
                 <!-- Confirm Button -->
                 <div class="text-center">
-                    <button id="confirmBooking" class="btn-primary btn-lg">
+                    <button id="confirmBooking" class="btn-primary btn-confirm btn-lg">
                         Confirm Booking <i class="fas fa-check"></i>
                     </button>
                 </div>
@@ -386,7 +389,7 @@
                 <h2>Booking Confirmed!</h2>
                 <p class="mb-2">Your trip has been successfully planned.</p>
                 <p id="finalPrice" class="mb-4" style="font-size: 24px; font-weight: 700; color: #00bcd4;">Total: $0</p>
-                <button id="modalConfirmBtn" class="btn-primary">Continue to Review</button>
+                <button id="modalConfirmBtn" class="btn-primary btn-continue">Continue to Review</button>
             </div>
         </div>
     </div>
@@ -426,8 +429,8 @@
                                     </div>
                                     
                                     <div class="d-flex gap-3">
-                                        <button type="submit" class="btn-primary flex-fill">Submit Review</button>
-                                        <button type="button" id="nextToPage5" class="btn-secondary flex-fill">Skip</button>
+                                        <button type="submit" class="btn-primary btn-submit flex-fill">Submit Review</button>
+                                        <button type="button" id="nextToPage5" class="btn-secondary btn-skip flex-fill">Skip</button>
                                     </div>
                                 </form>
                             </div>
@@ -465,7 +468,7 @@
                                 
                                 <p class="mb-4">Your travel experience has been successfully simulated. We hope you enjoyed your journey through VoyageFlow!</p>
                                 
-                                <button id="startOverBtn" class="btn-secondary mb-4">
+                                <button id="startOverBtn" class="btn-secondary btn-start-over mb-4">
                                     <i class="fas fa-redo"></i> Start Over
                                 </button>
                                 
@@ -574,6 +577,9 @@
         }
         
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize progress bar
+            updateProgressBarAuto();
+            
             // Wait for destinationsData to load
             if (typeof destinationsData !== 'undefined') {
                 window.destinationsData = destinationsData;
@@ -588,6 +594,23 @@
                 }, 100);
             }
         });
+        
+        // Re-initialize calculator when page3 becomes active
+        const page3Observer = new MutationObserver(() => {
+            const page3 = document.getElementById('page3');
+            if (page3 && page3.classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof initCalculatorPage === 'function') {
+                        initCalculatorPage();
+                    }
+                }, 100);
+            }
+        });
+        
+        const page3 = document.getElementById('page3');
+        if (page3) {
+            page3Observer.observe(page3, { attributes: true, attributeFilter: ['class'] });
+        }
     </script>
 </body>
 </html>
