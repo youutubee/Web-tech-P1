@@ -1,0 +1,159 @@
+Title: VoyageFlow — Interactive Travel Experience Simulator
+Project Objective
+To develop a 4-page, client-side-only website that simulates a user's journey through a travel
+service portal. The project will guide a user from registration (with validation) to content
+browsing (a travel blog), then to an interactive price calculation module, and finally to a
+confirmation page.
+The primary objective is to demonstrate proficiency in front-end web development using only
+HTML, CSS, and modern JavaScript. The focus is on creating a seamless, interactive, and
+visually appealing user experience in a static environment (like GitHub Pages) with no database
+support.
+Scope & Key Features
+The application will consist of four distinct views, simulating a multi-page website by showing
+and hiding different page containers using JavaScript.
+
+Page 1: User Registration Form
+Purpose: To capture and validate user information before proceeding.
+Features:
+A clean, responsive registration form.
+JavaScript Validation: The script must perform real-time or on-submit validation for:
+Phone Number: Must be exactly 10 digits.
+PIN Code: Must be exactly 6 digits.
+Email Address: Must be in a valid format (e.g., user@domain.com).
+User Feedback: Display clear error messages for invalid fields.
+Submission: On successful validation, a "Submit" button will trigger a custom popup/modal
+(not a browser alert()) with a success message and then automatically navigate the user to Page
+2.
+Page 2: Travel Blog & Destination Showcase
+Purpose: To present engaging travel content in a navigable, single-page-scroll format.
+Features:
+A minimum of 5 distinct content sections (e.g., "Paris," "Tokyo," "Rome"), each styled as a
+mini-blog entry.
+Section Navigation: A sticky navigation bar at the top of the page will contain tabs/links.
+Smooth Scrolling: Clicking a tab must smoothly scroll the page to the corresponding content
+section (using anchor links).
+Next Page: A clearly visible button at the end of the page to navigate the user to Page
+3.
+Page 3: Trip Itinerary & Price Calculator
+Purpose: To allow users to select various travel and food options and see a real-time price
+calculation.
+Features:
+Multiple sections (e.g., "Travel Options," "Food Packages," "Activities").
+Interactive Selection: Each section will feature multiple options (e.g., "Economy Flight,"
+"Local Food Tour") with an associated price, selectable via checkboxes.
+Real-Time Calculation: A "Total Price" display on the page must update instantly using
+JavaScript every time a user checks or unchecks an option.
+Confirmation: After selection, a "Confirm" or "Next" button will display a final message (e.g.,
+in a modal) and then navigate the user to the final page.
+Page 4: Confirmation / Thank You Page
+Purpose: To provide a polished and conclusive end to the user's journey.
+Features:
+The design of this page is open but must be aesthetically consistent with the previous pages.
+It should convey a clear "Thank You" or "Booking Simulated" message. It could include a
+summary, social media links, or a "Start Over" button.
+Technical Constraints & Requirements
+Core Technology: The entire project must be built using only HTML5, CSS3, and modern
+JavaScript (ES6+). No external frameworks are required, but a CSS utility library like Tailwind
+(via CDN) is acceptable for styling.
+No Database: All content and pricing data will be static (hard coded in the HTML or
+JavaScript). No user data will be saved.
+Single-File Simulation: The "multi-page" experience must be simulated within a single .html
+file by showing and hiding the different page <div> containers.
+No alert()/confirm(): All popups and messages must be custom-built HTML/CSS modals to
+ensure professional user experience.
+Deployment: The final website must be fully functional when opened as a local file or hosted
+by a static hosting service like GitHub Pages.
+
+The design should be as follows
+
+To design VoyageFlow with a fresh, modern, and appealing look while fulfilling all your project requirements, here’s a design concept for all four pages using Tailwind CSS, focused on clean layouts with subtle animations, smooth interactions, and a contemporary feel. The approach will avoid common "boxed" or "card-heavy" designs for a more fluid, immersive experience.
+
+Design Concept Overview
+Overall Style
+Color Palette: Soft gradient backgrounds with pastel colors that shift subtly across pages for visual comfort and interest (e.g., soft blues, pinks, and greens).
+
+Typography: Use modern sans-serif fonts with varying weights for hierarchy (e.g., "Poppins" or "Inter" via Google Fonts).
+
+Layout: Use full viewport height sections with flexible padding, generous white space, and edge-to-edge content flow.
+
+Animations: Smooth fade-ins, scale-ups on buttons, subtle underline animations on nav links.
+
+Navigation: Sticky top bar with fluid tab indicator under the active section.
+
+Detailed Page Designs with Tailwind
+Page 1: Registration Form
+Background: Gradient pale blue to light pink.
+
+Form container: Centered, glassmorphism style panel with semi-transparent frosted background and rounded corners.
+
+Inputs: Large, borderless input fields with subtle bottom borders that animate color on focus.
+
+Validation feedback: Inline error messages displayed below inputs in a soft red text, dynamically shown.
+
+Submit Button: Gradient fill with scale-up animation on hover.
+
+Modal: Elegant centered modal with drop shadow and subtle bounce-in animation on success.
+
+Tailwind classes examples:
+bg-gradient-to-r from-blue-100 to-pink-100 min-h-screen flex justify-center items-center p-6
+bg-white/30 backdrop-blur-lg rounded-xl p-8 max-w-md w-full
+border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition duration-300
+text-red-500 mt-1 text-sm
+bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-105 transition-transform rounded-lg shadow-lg px-6 py-3 text-white font-semibold
+
+Page 2: Travel Blog & Destination Showcase
+Background: Soft pastel green gradient.
+
+Navbar: Sticky, transparent background with a gradient underline indicator that smoothly moves on tab hover and active.
+
+Blog Sections: Full-width horizontal sections with large background images, overlaid with semi-transparent dark layer and white text.
+
+Content: Minimal text with large headings, short paragraphs, and call-to-action buttons that invert colors on hover.
+
+Scrolling: Smooth scrolling using JS and Tailwind’s smooth scroll styling.
+
+Next Button: Floating lower-right corner button, circular with a shadow and gradient fill.
+
+Tailwind snippets:
+sticky top-0 bg-transparent backdrop-blur-sm flex space-x-8 px-10 py-4 z-20
+border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer
+relative w-full h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16
+bg-black bg-opacity-40 rounded-lg max-w-xl
+fixed bottom-10 right-10 rounded-full p-4 bg-gradient-to-r from-green-400 to-blue-500 shadow-lg hover:brightness-110 transition
+
+Page 3: Trip Itinerary & Price Calculator
+Background: White with subtle shadowed card sections.
+
+Sections: Divided cards with slight elevation and rounded corners.
+
+Options: Stylish checkboxes with custom designs—large clickable labels included with price tags aligned right.
+
+Real-time Total: Large sticky footer displaying total price in bold with a gradient accent bar above.
+
+Confirm Button: Full-width, bold, with hover glow effect and rounded edges.
+
+Modal: Slide-in confirmation modal from the bottom.
+
+Tailwind cues:
+bg-white min-h-screen py-12 px-6
+shadow-lg rounded-xl p-8 max-w-3xl mx-auto mb-8
+flex items-center justify-between cursor-pointer space-x-4
+custom-checkbox peer hidden relative before:absolute before:content-[""] before:w-5 before:h-5 before:border-2 before:rounded-lg before:border-gray-400 peer-checked:before:bg-gradient-to-r peer-checked:before:from-purple-400 peer-checked:before:to-pink-500
+fixed bottom-0 w-full bg-white shadow-md py-4 px-6 flex justify-between items-center sticky
+bg-gradient-to-r from-purple-500 to-pink-600 hover:shadow-lg transition font-bold text-white rounded-lg py-3
+
+Page 4: Confirmation / Thank You Page
+Background: Elegant soft pastel gradient (mix of pink and purple).
+
+Content: Centered card with a large 'Thank You!' heading, travel icon SVG illustration, and summary text.
+
+Buttons: “Start Over” button below the summary with a gradient outline, subtle scale-up on hover.
+
+Social Media: Line icons with hover color shift, spaced horizontally below.
+
+Tailwind example:
+min-h-screen flex items-center justify-center bg-gradient-to-tr from-pink-300 via-purple-300 to-indigo-400
+bg-white/90 backdrop-blur-md rounded-3xl p-12 text-center max-w-lg drop-shadow-lg
+text-4xl font-extrabold text-purple-700 mb-6
+border-2 border-purple-600 rounded-full px-8 py-3 text-purple-600 font-semibold hover:bg-purple-600 hover:text-white transition-transform
+flex justify-center space-x-8 mt-8 text-gray-600 hover:text-purple-700 transition

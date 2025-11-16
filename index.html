@@ -4,572 +4,590 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoyageFlow — Interactive Travel Experience Simulator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Bootstrap 5.2.0 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
     <!-- Progress Bar -->
-    <div class="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
-        <div id="progressBar" class="progress-bar" style="width: 16.66%;"></div>
+    <div class="progress-container">
+        <div id="progressBar" class="progress-bar" style="width: 20%;"></div>
     </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-plane"></i> VoyageFlow
+                </a>
+                <button class="navbar-toggler" type="button">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="navbar-nav">
+                    <li><a class="nav-link" href="#page1">Home</a></li>
+                    <li><a class="nav-link" href="#page2">Destinations</a></li>
+                    <li><a class="nav-link" href="#page2b">Select</a></li>
+                    <li><a class="nav-link" href="#page3">Plan</a></li>
+                    <li><a class="nav-link" href="#page4">Review</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <!-- Page 1: Registration Form -->
     <div id="page1" class="page active">
-        <div class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen flex justify-center items-center p-6">
-            <div class="bg-white/30 backdrop-blur-lg rounded-xl p-8 max-w-md w-full shadow-2xl section-fade-in">
-                <div class="text-center mb-6">
-                    <h1 class="text-4xl font-extrabold mb-2 text-gradient">Welcome to VoyageFlow</h1>
-                    <p class="text-gray-600">Start your journey with us</p>
+        <!-- Hero Carousel -->
+        <div id="heroCarousel" class="carousel-container">
+            <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920');">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1>Welcome to VoyageFlow</h1>
+                    <p>Your journey to amazing destinations starts here</p>
                 </div>
-                <form id="registrationForm" class="space-y-6">
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">Full Name</label>
-                        <input type="text" id="fullName" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition duration-300 bg-transparent" placeholder="Enter your full name" required>
-                        <span class="error-message" id="nameError">Name must be at least 2 characters and contain only letters</span>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">Phone Number</label>
-                        <input type="tel" id="phoneNumber" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition duration-300 bg-transparent" placeholder="10 digits only" required>
-                        <span class="error-message" id="phoneError">Phone number must be exactly 10 digits</span>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">PIN Code</label>
-                        <input type="text" id="pinCode" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition duration-300 bg-transparent" placeholder="6 digits only" required>
-                        <span class="error-message" id="pinError">PIN code must be exactly 6 digits</span>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">Email Address</label>
-                        <input type="email" id="email" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition duration-300 bg-transparent" placeholder="user@domain.com" required>
-                        <span class="error-message" id="emailError">Please enter a valid email address</span>
-                    </div>
-                    
-                    <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-105 transition-transform rounded-lg shadow-lg px-6 py-3 text-white font-semibold hover-lift">
-                        Submit & Continue
-                    </button>
-                </form>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920');">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1>Discover the World</h1>
+                    <p>Explore breathtaking destinations and create unforgettable memories</p>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920');">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1>Plan Your Adventure</h1>
+                    <p>Customize your perfect trip with our easy-to-use platform</p>
+                </div>
+            </div>
+            <button class="carousel-controls carousel-prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-controls carousel-next"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-indicators">
+                <span class="carousel-indicator active"></span>
+                <span class="carousel-indicator"></span>
+                <span class="carousel-indicator"></span>
             </div>
         </div>
+
+        <!-- Registration Form Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Get Started</h2>
+                    <p>Register to begin planning your dream vacation</p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <form id="registrationForm">
+                                    <div class="form-group">
+                                        <label class="form-label" for="fullName">Full Name</label>
+                                        <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
+                                        <span class="error-message" id="nameError"></span>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label" for="phoneNumber">Phone Number</label>
+                                        <input type="tel" class="form-control" id="phoneNumber" placeholder="10 digits only" required>
+                                        <span class="error-message" id="phoneError"></span>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label" for="pinCode">PIN Code</label>
+                                        <input type="text" class="form-control" id="pinCode" placeholder="6 digits only" required>
+                                        <span class="error-message" id="pinError"></span>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label" for="email">Email Address</label>
+                                        <input type="email" class="form-control" id="email" placeholder="user@domain.com" required>
+                                        <span class="error-message" id="emailError"></span>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn-primary w-100">Submit & Continue</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Destinations Preview -->
+        <section class="section section-gray">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Popular Destinations</h2>
+                    <p>Explore our most loved travel destinations</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" class="card-img" alt="Paris">
+                            <div class="card-body">
+                                <h5 class="card-title">Paris, France</h5>
+                                <p class="card-text">The City of Light with iconic landmarks</p>
+                                <div class="card-price">From $800</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800" class="card-img" alt="Tokyo">
+                            <div class="card-body">
+                                <h5 class="card-title">Tokyo, Japan</h5>
+                                <p class="card-text">Ancient traditions meet modern innovation</p>
+                                <div class="card-price">From $1,200</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1529260830199-42c24126f198?w=800" class="card-img" alt="Rome">
+                            <div class="card-body">
+                                <h5 class="card-title">Rome, Italy</h5>
+                                <p class="card-text">Eternal City with rich history</p>
+                                <div class="card-price">From $900</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- Success Modal -->
     <div id="successModal" class="modal">
-        <div class="modal-content bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
             <div class="text-center">
-                <div class="text-6xl mb-4 animate-bounce">✅</div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Registration Successful!</h2>
-                <p class="text-gray-600 mb-6">Welcome to VoyageFlow. Let's start your journey!</p>
-                <button id="modalCloseBtn" class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-105 transition-transform rounded-lg shadow-lg px-6 py-3 text-white font-semibold">
-                    Continue
-                </button>
+                <i class="fas fa-check-circle" style="font-size: 64px; color: #00bcd4; margin-bottom: 20px;"></i>
+                <h2>Registration Successful!</h2>
+                <p class="mb-4">Welcome to VoyageFlow. Let's start your journey!</p>
+                <button id="modalCloseBtn" class="btn-primary">Continue</button>
             </div>
         </div>
     </div>
 
-    <!-- Page 2: Travel Blog & Destination Showcase -->
+    <!-- Page 2: Travel Blog -->
     <div id="page2" class="page">
-        <div class="bg-gradient-to-b from-green-100 via-emerald-50 to-blue-100 min-h-screen">
-            <!-- Sticky Navigation -->
-            <nav class="sticky top-1 bg-white/40 backdrop-blur-md flex justify-center flex-wrap gap-4 px-10 py-4 z-20 shadow-sm rounded-b-lg mx-4 mt-1">
-                <a href="#paris" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600 px-4 py-2" data-section="paris">Paris</a>
-                <a href="#tokyo" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600 px-4 py-2" data-section="tokyo">Tokyo</a>
-                <a href="#rome" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600 px-4 py-2" data-section="rome">Rome</a>
-                <a href="#bali" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600 px-4 py-2" data-section="bali">Bali</a>
-                <a href="#santorini" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600 px-4 py-2" data-section="santorini">Santorini</a>
-                <a href="#dubai" class="nav-link border-b-4 border-transparent hover:border-green-400 transition-all cursor-pointer font-medium text-gray-700 hover:text-green-600 px-4 py-2" data-section="dubai">Dubai</a>
-            </nav>
-
-            <!-- Blog Sections -->
-            <section id="paris" class="blog-section relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920');">
-                <div class="bg-black bg-opacity-50 rounded-lg max-w-2xl p-8 backdrop-blur-sm">
-                    <h2 class="text-6xl font-extrabold mb-4">Paris, France</h2>
-                    <p class="text-xl mb-4">The City of Light awaits you with its iconic Eiffel Tower, world-class museums, and charming streets.</p>
-                    <p class="text-lg mb-4">Experience the romance of Montmartre, the elegance of the Champs-Élysées, and the artistic heritage of the Louvre Museum.</p>
-                    <p class="text-base opacity-90">From art galleries to exquisite cuisine, Paris offers an unforgettable cultural journey. Best visited in spring (April-June) or fall (September-November) for pleasant weather.</p>
-                    <div class="mt-6 flex justify-center gap-4 text-sm">
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🏛️ Museums</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🍷 Wine Tours</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🎨 Art & Culture</span>
-                    </div>
+        <div class="blog-nav">
+            <div class="container">
+                <div class="blog-nav-links">
+                    <a href="#paris" class="blog-nav-link active" data-section="paris">Paris</a>
+                    <a href="#tokyo" class="blog-nav-link" data-section="tokyo">Tokyo</a>
+                    <a href="#rome" class="blog-nav-link" data-section="rome">Rome</a>
+                    <a href="#bali" class="blog-nav-link" data-section="bali">Bali</a>
+                    <a href="#santorini" class="blog-nav-link" data-section="santorini">Santorini</a>
+                    <a href="#dubai" class="blog-nav-link" data-section="dubai">Dubai</a>
                 </div>
-            </section>
-
-            <section id="tokyo" class="blog-section relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1920');">
-                <div class="bg-black bg-opacity-50 rounded-lg max-w-2xl p-8 backdrop-blur-sm">
-                    <h2 class="text-6xl font-extrabold mb-4">Tokyo, Japan</h2>
-                    <p class="text-xl mb-4">A mesmerizing blend of ancient traditions and cutting-edge technology.</p>
-                    <p class="text-lg mb-4">Explore vibrant neighborhoods like Shibuya and Harajuku, savor authentic sushi at Tsukiji Market, and witness the beauty of cherry blossoms in spring.</p>
-                    <p class="text-base opacity-90">From serene temples like Senso-ji to neon-lit streets of Shinjuku, Tokyo is a city of contrasts and endless discoveries. Visit during cherry blossom season (late March-early April) for a magical experience.</p>
-                    <div class="mt-6 flex justify-center gap-4 text-sm">
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🍣 Sushi & Ramen</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🏯 Temples</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🌸 Cherry Blossoms</span>
-                    </div>
-                </div>
-            </section>
-
-            <section id="rome" class="blog-section relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1529260830199-42c24126f198?w=1920');">
-                <div class="bg-black bg-opacity-50 rounded-lg max-w-2xl p-8 backdrop-blur-sm">
-                    <h2 class="text-6xl font-extrabold mb-4">Rome, Italy</h2>
-                    <p class="text-xl mb-4">Step into history as you wander through ancient ruins, magnificent churches, and piazzas.</p>
-                    <p class="text-lg mb-4">Visit the Colosseum, explore the Vatican City, and toss a coin in the Trevi Fountain. Indulge in authentic Italian cuisine and gelato while exploring the Eternal City.</p>
-                    <p class="text-base opacity-90">Every corner tells a story in this timeless city where past and present coexist beautifully. Best time to visit: April-June and September-October for mild weather.</p>
-                    <div class="mt-6 flex justify-center gap-4 text-sm">
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🏛️ Ancient History</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🍝 Italian Cuisine</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">⛪ Vatican City</span>
-                    </div>
-                </div>
-            </section>
-
-            <section id="bali" class="blog-section relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1920');">
-                <div class="bg-black bg-opacity-50 rounded-lg max-w-2xl p-8 backdrop-blur-sm">
-                    <h2 class="text-6xl font-extrabold mb-4">Bali, Indonesia</h2>
-                    <p class="text-xl mb-4">Tropical paradise with stunning beaches, lush rice terraces, and rich cultural heritage.</p>
-                    <p class="text-lg mb-4">Experience world-class resorts in Ubud, visit ancient temples like Tanah Lot, and enjoy breathtaking sunsets at Uluwatu. Perfect for relaxation, adventure, and spiritual rejuvenation.</p>
-                    <p class="text-base opacity-90">A perfect blend of relaxation, adventure, and spiritual rejuvenation awaits in Bali. Dry season (April-October) is ideal for visiting.</p>
-                    <div class="mt-6 flex justify-center gap-4 text-sm">
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🏖️ Beaches</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🧘 Wellness</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🌴 Rice Terraces</span>
-                    </div>
-                </div>
-            </section>
-
-            <section id="santorini" class="blog-section relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=1920');">
-                <div class="bg-black bg-opacity-50 rounded-lg max-w-2xl p-8 backdrop-blur-sm">
-                    <h2 class="text-6xl font-extrabold mb-4">Santorini, Greece</h2>
-                    <p class="text-xl mb-4">White-washed buildings perched on cliffs overlooking the azure Aegean Sea.</p>
-                    <p class="text-lg mb-4">Enjoy spectacular sunsets in Oia, explore ancient ruins in Akrotiri, and relax on unique black sand beaches. Experience exquisite Mediterranean cuisine and local wines.</p>
-                    <p class="text-base opacity-90 mb-8">A romantic island destination that promises unforgettable memories and stunning vistas. Best visited in late spring (May-June) or early fall (September).</p>
-                    <div class="mt-6 flex justify-center gap-4 text-sm">
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🌅 Sunsets</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🏖️ Beaches</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🍷 Wine Tasting</span>
-                    </div>
-                </div>
-            </section>
-
-            <section id="dubai" class="blog-section relative w-full min-h-screen flex items-center justify-center bg-cover bg-center text-white text-center p-16" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920');">
-                <div class="bg-black bg-opacity-50 rounded-lg max-w-2xl p-8 backdrop-blur-sm">
-                    <h2 class="text-6xl font-extrabold mb-4">Dubai, UAE</h2>
-                    <p class="text-xl mb-4">A futuristic city where luxury meets innovation in the heart of the desert.</p>
-                    <p class="text-lg mb-4">Marvel at the Burj Khalifa, shop in world-class malls, experience desert safaris, and enjoy luxury resorts. From traditional souks to modern skyscrapers, Dubai offers a unique blend of cultures.</p>
-                    <p class="text-base opacity-90 mb-8">Perfect for luxury travel, shopping, and adventure. Best time to visit: November to March for pleasant weather.</p>
-                    <div class="mt-6 flex justify-center gap-4 text-sm">
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🏙️ Modern Architecture</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🛍️ Shopping</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full">🏜️ Desert Safari</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Next Button -->
-            <div class="fab">
-                <button id="nextToPage2b" class="rounded-full p-4 bg-gradient-to-r from-green-400 to-blue-500 shadow-lg hover:brightness-110 transition text-white font-bold text-lg shadow-glow">
-                    Select Destination →
-                </button>
             </div>
+        </div>
+
+        <section id="paris" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920');">
+            <div class="blog-content">
+                <h2>Paris, France</h2>
+                <p>The City of Light awaits you with its iconic Eiffel Tower, world-class museums, and charming streets.</p>
+                <p>Experience the romance of Montmartre, the elegance of the Champs-Élysées, and the artistic heritage of the Louvre Museum.</p>
+                <p>From art galleries to exquisite cuisine, Paris offers an unforgettable cultural journey. Best visited in spring (April-June) or fall (September-November) for pleasant weather.</p>
+                <div class="blog-tags">
+                    <span class="blog-tag">🏛️ Museums</span>
+                    <span class="blog-tag">🍷 Wine Tours</span>
+                    <span class="blog-tag">🎨 Art & Culture</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="tokyo" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1920');">
+            <div class="blog-content">
+                <h2>Tokyo, Japan</h2>
+                <p>A mesmerizing blend of ancient traditions and cutting-edge technology.</p>
+                <p>Explore vibrant neighborhoods like Shibuya and Harajuku, savor authentic sushi at Tsukiji Market, and witness the beauty of cherry blossoms in spring.</p>
+                <p>From serene temples like Senso-ji to neon-lit streets of Shinjuku, Tokyo is a city of contrasts and endless discoveries.</p>
+                <div class="blog-tags">
+                    <span class="blog-tag">🍣 Sushi & Ramen</span>
+                    <span class="blog-tag">🏯 Temples</span>
+                    <span class="blog-tag">🌸 Cherry Blossoms</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="rome" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1529260830199-42c24126f198?w=1920');">
+            <div class="blog-content">
+                <h2>Rome, Italy</h2>
+                <p>Step into history as you wander through ancient ruins, magnificent churches, and piazzas.</p>
+                <p>Visit the Colosseum, explore the Vatican City, and toss a coin in the Trevi Fountain. Indulge in authentic Italian cuisine and gelato while exploring the Eternal City.</p>
+                <p>Every corner tells a story in this timeless city where past and present coexist beautifully.</p>
+                <div class="blog-tags">
+                    <span class="blog-tag">🏛️ Ancient History</span>
+                    <span class="blog-tag">🍝 Italian Cuisine</span>
+                    <span class="blog-tag">⛪ Vatican City</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="bali" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1920');">
+            <div class="blog-content">
+                <h2>Bali, Indonesia</h2>
+                <p>Tropical paradise with stunning beaches, lush rice terraces, and rich cultural heritage.</p>
+                <p>Experience world-class resorts in Ubud, visit ancient temples like Tanah Lot, and enjoy breathtaking sunsets at Uluwatu.</p>
+                <p>A perfect blend of relaxation, adventure, and spiritual rejuvenation awaits in Bali.</p>
+                <div class="blog-tags">
+                    <span class="blog-tag">🏖️ Beaches</span>
+                    <span class="blog-tag">🧘 Wellness</span>
+                    <span class="blog-tag">🌴 Rice Terraces</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="santorini" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=1920');">
+            <div class="blog-content">
+                <h2>Santorini, Greece</h2>
+                <p>White-washed buildings perched on cliffs overlooking the azure Aegean Sea.</p>
+                <p>Enjoy spectacular sunsets in Oia, explore ancient ruins in Akrotiri, and relax on unique black sand beaches.</p>
+                <p>A romantic island destination that promises unforgettable memories and stunning vistas.</p>
+                <div class="blog-tags">
+                    <span class="blog-tag">🌅 Sunsets</span>
+                    <span class="blog-tag">🏖️ Beaches</span>
+                    <span class="blog-tag">🍷 Wine Tasting</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="dubai" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920');">
+            <div class="blog-content">
+                <h2>Dubai, UAE</h2>
+                <p>A futuristic city where luxury meets innovation in the heart of the desert.</p>
+                <p>Marvel at the Burj Khalifa, shop in world-class malls, experience desert safaris, and enjoy luxury resorts.</p>
+                <p>Perfect for luxury travel, shopping, and adventure. Best time to visit: November to March.</p>
+                <div class="blog-tags">
+                    <span class="blog-tag">🏙️ Modern Architecture</span>
+                    <span class="blog-tag">🛍️ Shopping</span>
+                    <span class="blog-tag">🏜️ Desert Safari</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="fab">
+            <button id="nextToPage2b" class="btn-primary" style="border-radius: 50px; padding: 15px 30px;">
+                <i class="fas fa-arrow-right"></i> Select Destination
+            </button>
         </div>
     </div>
 
     <!-- Page 2b: Destination Selection -->
     <div id="page2b" class="page">
-        <div class="bg-gradient-to-br from-purple-100 via-pink-100 to-orange-100 min-h-screen py-12 px-6">
-            <div class="max-w-6xl mx-auto">
-                <h1 class="text-5xl font-extrabold text-center mb-4 text-gradient">Choose Your Destination</h1>
-                <p class="text-center text-gray-600 mb-12 text-lg">Select your dream destination to continue</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                    <div class="destination-card bg-white rounded-xl p-6 shadow-lg hover-lift" data-destination="Paris">
-                        <div class="w-full h-48 bg-cover bg-center rounded-lg mb-4" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800');"></div>
-                        <h3 class="text-2xl font-bold mb-2 text-gray-800">Paris, France</h3>
-                        <p class="text-gray-600 mb-4">The City of Light with iconic landmarks and rich culture.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-purple-600 font-semibold">From $800</span>
-                            <span class="text-sm text-gray-500">⭐ 4.8</span>
-                        </div>
-                    </div>
-                    
-                    <div class="destination-card bg-white rounded-xl p-6 shadow-lg hover-lift" data-destination="Tokyo">
-                        <div class="w-full h-48 bg-cover bg-center rounded-lg mb-4" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800');"></div>
-                        <h3 class="text-2xl font-bold mb-2 text-gray-800">Tokyo, Japan</h3>
-                        <p class="text-gray-600 mb-4">Ancient traditions meet modern innovation.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-purple-600 font-semibold">From $1,200</span>
-                            <span class="text-sm text-gray-500">⭐ 4.9</span>
-                        </div>
-                    </div>
-                    
-                    <div class="destination-card bg-white rounded-xl p-6 shadow-lg hover-lift" data-destination="Rome">
-                        <div class="w-full h-48 bg-cover bg-center rounded-lg mb-4" style="background-image: url('https://images.unsplash.com/photo-1529260830199-42c24126f198?w=800');"></div>
-                        <h3 class="text-2xl font-bold mb-2 text-gray-800">Rome, Italy</h3>
-                        <p class="text-gray-600 mb-4">Eternal City with ancient history and delicious cuisine.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-purple-600 font-semibold">From $900</span>
-                            <span class="text-sm text-gray-500">⭐ 4.7</span>
-                        </div>
-                    </div>
-                    
-                    <div class="destination-card bg-white rounded-xl p-6 shadow-lg hover-lift" data-destination="Bali">
-                        <div class="w-full h-48 bg-cover bg-center rounded-lg mb-4" style="background-image: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800');"></div>
-                        <h3 class="text-2xl font-bold mb-2 text-gray-800">Bali, Indonesia</h3>
-                        <p class="text-gray-600 mb-4">Tropical paradise with beaches and wellness retreats.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-purple-600 font-semibold">From $600</span>
-                            <span class="text-sm text-gray-500">⭐ 4.8</span>
-                        </div>
-                    </div>
-                    
-                    <div class="destination-card bg-white rounded-xl p-6 shadow-lg hover-lift" data-destination="Santorini">
-                        <div class="w-full h-48 bg-cover bg-center rounded-lg mb-4" style="background-image: url('https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=800');"></div>
-                        <h3 class="text-2xl font-bold mb-2 text-gray-800">Santorini, Greece</h3>
-                        <p class="text-gray-600 mb-4">Romantic island with stunning sunsets and white buildings.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-purple-600 font-semibold">From $1,000</span>
-                            <span class="text-sm text-gray-500">⭐ 4.9</span>
-                        </div>
-                    </div>
-                    
-                    <div class="destination-card bg-white rounded-xl p-6 shadow-lg hover-lift" data-destination="Dubai">
-                        <div class="w-full h-48 bg-cover bg-center rounded-lg mb-4" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800');"></div>
-                        <h3 class="text-2xl font-bold mb-2 text-gray-800">Dubai, UAE</h3>
-                        <p class="text-gray-600 mb-4">Luxury destination with modern architecture and shopping.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-purple-600 font-semibold">From $1,100</span>
-                            <span class="text-sm text-gray-500">⭐ 4.6</span>
-                        </div>
-                    </div>
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Choose Your Destination</h2>
+                    <p>Select your dream destination to continue</p>
                 </div>
-                
-                <div class="text-center">
-                    <button id="nextToPage3" class="bg-gradient-to-r from-purple-500 to-pink-600 hover:shadow-lg transition font-bold text-white rounded-lg py-4 px-8 text-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                        Continue to Planning →
+                <div class="row g-4" id="destinationGrid">
+                    <!-- Destination cards will be populated by JavaScript -->
+                </div>
+                <div class="text-center mt-5">
+                    <button id="nextToPage3" class="btn-primary btn-lg disabled" disabled>
+                        Continue to Planning <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 
-    <!-- Page 3: Trip Itinerary & Price Calculator -->
+    <!-- Page 3: Trip Calculator -->
     <div id="page3" class="page">
-        <div class="bg-white min-h-screen py-12 px-6 pb-40">
-            <div class="max-w-5xl mx-auto">
-                <h1 class="text-5xl font-extrabold text-center mb-4 text-gradient">Plan Your Trip</h1>
-                <p class="text-center text-gray-600 mb-12 text-lg">Customize your travel experience</p>
-                
-                <!-- Accommodation Options -->
-                <div class="shadow-lg rounded-xl p-8 max-w-4xl mx-auto mb-8 bg-gradient-to-br from-indigo-50 to-blue-50">
-                    <h2 class="text-3xl font-bold mb-6 text-gray-800 flex items-center gap-2">
-                        <span>🏨</span> Accommodation
-                    </h2>
-                    <div class="space-y-4">
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="80" data-category="accommodation" value="hostel">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">Budget Hostel</span>
-                                    <span class="text-sm text-gray-500">Shared rooms, basic amenities</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-indigo-600 text-lg">$80/night</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="150" data-category="accommodation" value="hotel">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">3-Star Hotel</span>
-                                    <span class="text-sm text-gray-500">Comfortable rooms, breakfast included</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-indigo-600 text-lg">$150/night</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="300" data-category="accommodation" value="luxury">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">5-Star Luxury Resort</span>
-                                    <span class="text-sm text-gray-500">Premium amenities, spa access</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-indigo-600 text-lg">$300/night</span>
-                        </label>
-                    </div>
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2 class="page-title">Plan Your Trip</h2>
+                    <p>Customize your travel experience</p>
                 </div>
-                
-                <!-- Travel Options -->
-                <div class="shadow-lg rounded-xl p-8 max-w-4xl mx-auto mb-8 bg-gradient-to-br from-blue-50 to-cyan-50">
-                    <h2 class="text-3xl font-bold mb-6 text-gray-800 flex items-center gap-2">
-                        <span>✈️</span> Travel Options
-                    </h2>
-                    <div class="space-y-4">
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="500" data-category="travel" value="economy">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">Economy Flight</span>
-                                    <span class="text-sm text-gray-500">Standard seating, meals included</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-blue-600 text-lg">$500</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="1200" data-category="travel" value="business">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">Business Class Flight</span>
-                                    <span class="text-sm text-gray-500">Extra legroom, priority boarding</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-blue-600 text-lg">$1,200</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="2500" data-category="travel" value="first">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">First Class Flight</span>
-                                    <span class="text-sm text-gray-500">Luxury seating, premium service</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-blue-600 text-lg">$2,500</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="300" data-category="travel" value="train">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">High-Speed Train</span>
-                                    <span class="text-sm text-gray-500">Comfortable journey, scenic views</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-blue-600 text-lg">$300</span>
-                        </label>
+
+                <!-- Accommodation -->
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4"><i class="fas fa-hotel"></i> Accommodation</h3>
+                        <div id="accommodationOptions"></div>
                     </div>
                 </div>
 
-                <!-- Food Packages -->
-                <div class="shadow-lg rounded-xl p-8 max-w-4xl mx-auto mb-8 bg-gradient-to-br from-pink-50 to-rose-50">
-                    <h2 class="text-3xl font-bold mb-6 text-gray-800 flex items-center gap-2">
-                        <span>🍽️</span> Food Packages
-                    </h2>
-                    <div class="space-y-4">
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="150" data-category="food" value="local">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">Local Food Tour</span>
-                                    <span class="text-sm text-gray-500">3-hour guided tour, 5+ tastings</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-rose-600 text-lg">$150</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="250" data-category="food" value="fine">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">Fine Dining Experience</span>
-                                    <span class="text-sm text-gray-500">Michelin-starred restaurant, 5-course meal</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-rose-600 text-lg">$250</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="80" data-category="food" value="street">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">Street Food Adventure</span>
-                                    <span class="text-sm text-gray-500">Local markets, authentic flavors</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-rose-600 text-lg">$80</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="120" data-category="food" value="breakfast">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">Daily Breakfast Buffet</span>
-                                    <span class="text-sm text-gray-500">Hotel breakfast, 7 days</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-rose-600 text-lg">$120</span>
-                        </label>
+                <!-- Travel -->
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4"><i class="fas fa-plane"></i> Travel Options</h3>
+                        <div id="travelOptions"></div>
+                    </div>
+                </div>
+
+                <!-- Food -->
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4"><i class="fas fa-utensils"></i> Food Packages</h3>
+                        <div id="foodOptions"></div>
                     </div>
                 </div>
 
                 <!-- Activities -->
-                <div class="shadow-lg rounded-xl p-8 max-w-4xl mx-auto mb-8 bg-gradient-to-br from-purple-50 to-violet-50">
-                    <h2 class="text-3xl font-bold mb-6 text-gray-800 flex items-center gap-2">
-                        <span>🎯</span> Activities & Experiences
-                    </h2>
-                    <div class="space-y-4">
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="200" data-category="activity" value="sightseeing">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">City Sightseeing Tour</span>
-                                    <span class="text-sm text-gray-500">Full-day guided tour, all major attractions</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-violet-600 text-lg">$200</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="350" data-category="activity" value="adventure">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">Adventure Activities Package</span>
-                                    <span class="text-sm text-gray-500">Hiking, water sports, zip-lining</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-violet-600 text-lg">$350</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="180" data-category="activity" value="museum">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">Museum & Gallery Pass</span>
-                                    <span class="text-sm text-gray-500">Access to 10+ museums, skip-the-line</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-violet-600 text-lg">$180</span>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer space-x-4 p-4 hover:bg-white/70 rounded-lg transition">
-                            <div class="flex items-center space-x-4 flex-1">
-                                <input type="checkbox" class="custom-checkbox" data-price="400" data-category="activity" value="spa">
-                                <div>
-                                    <span class="font-medium text-gray-700 block">Spa & Wellness Retreat</span>
-                                    <span class="text-sm text-gray-500">Full-day spa, massage, yoga session</span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-violet-600 text-lg">$400</span>
-                        </label>
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4"><i class="fas fa-map-marked-alt"></i> Activities & Experiences</h3>
+                        <div id="activityOptions"></div>
                     </div>
                 </div>
 
                 <!-- Price Breakdown -->
-                <div class="shadow-lg rounded-xl p-8 max-w-4xl mx-auto mb-8 bg-gradient-to-br from-gray-50 to-slate-50">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-800">Price Breakdown</h2>
-                    <div id="priceBreakdown" class="text-gray-600">
-                        <p class="text-center py-4">Select items to see price breakdown</p>
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Price Breakdown</h3>
+                        <div id="priceBreakdown">
+                            <p class="text-center text-muted">Select items to see price breakdown</p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Confirm Button -->
-                <div class="max-w-4xl mx-auto">
-                    <button id="confirmBooking" class="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:shadow-lg transition font-bold text-white rounded-lg py-4 text-lg hover-lift">
-                        Confirm Booking
+                <div class="text-center">
+                    <button id="confirmBooking" class="btn-primary btn-lg">
+                        Confirm Booking <i class="fas fa-check"></i>
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Sticky Total Price Footer -->
-        <div class="fixed bottom-0 w-full bg-white shadow-2xl py-4 px-6 border-t-4" style="border-image: linear-gradient(to right, #a855f7, #ec4899) 1;">
-            <div class="max-w-5xl mx-auto flex justify-between items-center">
-                <span class="text-xl font-semibold text-gray-700">Total Price:</span>
-                <span id="totalPrice" class="text-4xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">$0</span>
+        <!-- Total Price Footer -->
+        <div class="total-price-footer">
+            <div class="total-price-content">
+                <span class="total-price-label">Total Price:</span>
+                <span id="totalPrice" class="total-price-value">$0</span>
             </div>
         </div>
     </div>
 
     <!-- Confirmation Modal -->
     <div id="confirmModal" class="modal">
-        <div class="modal-content bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
             <div class="text-center">
-                <div class="text-6xl mb-4">🎉</div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Booking Confirmed!</h2>
-                <p class="text-gray-600 mb-2">Your trip has been successfully planned.</p>
-                <p id="finalPrice" class="text-2xl font-bold text-purple-600 mb-6">Total: $0</p>
-                <button id="modalConfirmBtn" class="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:shadow-lg transition font-bold text-white rounded-lg py-3">
-                    Continue to Review
-                </button>
+                <i class="fas fa-check-circle" style="font-size: 64px; color: #00bcd4; margin-bottom: 20px;"></i>
+                <h2>Booking Confirmed!</h2>
+                <p class="mb-2">Your trip has been successfully planned.</p>
+                <p id="finalPrice" class="mb-4" style="font-size: 24px; font-weight: 700; color: #00bcd4;">Total: $0</p>
+                <button id="modalConfirmBtn" class="btn-primary">Continue to Review</button>
             </div>
         </div>
     </div>
 
-    <!-- Page 4: Review Page -->
+    <!-- Page 4: Review -->
     <div id="page4" class="page">
-        <div class="bg-gradient-to-br from-yellow-100 via-orange-100 to-pink-100 min-h-screen flex items-center justify-center p-6">
-            <div class="bg-white/90 backdrop-blur-md rounded-3xl p-12 text-center max-w-2xl w-full drop-shadow-lg section-fade-in">
-                <h1 class="text-4xl font-extrabold text-purple-700 mb-6">Share Your Experience</h1>
-                <p class="text-gray-600 mb-8">Help us improve by sharing your thoughts about VoyageFlow</p>
-                
-                <form id="reviewForm" class="space-y-6">
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-4 text-lg">Rate Your Experience</label>
-                        <div class="flex justify-center gap-2 mb-2">
-                            <span class="star text-4xl text-gray-300" data-rating="1">☆</span>
-                            <span class="star text-4xl text-gray-300" data-rating="2">☆</span>
-                            <span class="star text-4xl text-gray-300" data-rating="3">☆</span>
-                            <span class="star text-4xl text-gray-300" data-rating="4">☆</span>
-                            <span class="star text-4xl text-gray-300" data-rating="5">☆</span>
+        <section class="section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="card">
+                            <div class="card-body p-5">
+                                <div class="section-title">
+                                    <h2>Share Your Experience</h2>
+                                    <p>Help us improve by sharing your thoughts</p>
+                                </div>
+                                <form id="reviewForm">
+                                    <div class="form-group text-center">
+                                        <label class="form-label mb-3">Rate Your Experience</label>
+                                        <div class="star-rating">
+                                            <span class="star" data-rating="1">☆</span>
+                                            <span class="star" data-rating="2">☆</span>
+                                            <span class="star" data-rating="3">☆</span>
+                                            <span class="star" data-rating="4">☆</span>
+                                            <span class="star" data-rating="5">☆</span>
+                                        </div>
+                                        <p id="ratingDisplay" class="text-muted mt-2">Click stars to rate</p>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label" for="reviewText">Your Review</label>
+                                        <textarea class="form-control" id="reviewText" rows="5" placeholder="Tell us about your experience..."></textarea>
+                                    </div>
+                                    
+                                    <div id="reviewSuccess" class="alert alert-success d-none" role="alert">
+                                        Thank you for your feedback! Redirecting...
+                                    </div>
+                                    
+                                    <div class="d-flex gap-3">
+                                        <button type="submit" class="btn-primary flex-fill">Submit Review</button>
+                                        <button type="button" id="nextToPage5" class="btn-secondary flex-fill">Skip</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <p id="ratingDisplay" class="text-sm text-gray-500">Click stars to rate</p>
                     </div>
-                    
-                    <div>
-                        <label for="reviewText" class="block text-gray-700 font-medium mb-2 text-left">Your Review</label>
-                        <textarea id="reviewText" rows="5" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 outline-none transition duration-300 resize-none" placeholder="Tell us about your experience..."></textarea>
-                    </div>
-                    
-                    <div id="reviewSuccess" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                        Thank you for your feedback! Redirecting...
-                    </div>
-                    
-                    <div class="flex gap-4">
-                        <button type="submit" class="flex-1 bg-gradient-to-r from-purple-500 to-pink-600 hover:shadow-lg transition font-bold text-white rounded-lg py-3">
-                            Submit Review
-                        </button>
-                        <button type="button" id="nextToPage5" class="flex-1 bg-gray-200 hover:bg-gray-300 transition font-semibold text-gray-700 rounded-lg py-3">
-                            Skip
-                        </button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
 
-    <!-- Page 5: Confirmation / Thank You Page -->
+    <!-- Page 5: Thank You -->
     <div id="page5" class="page">
-        <div class="min-h-screen flex items-center justify-center bg-gradient-to-tr from-pink-300 via-purple-300 to-indigo-400 p-6">
-            <div class="bg-white/90 backdrop-blur-md rounded-3xl p-12 text-center max-w-2xl drop-shadow-lg section-fade-in">
-                <div class="text-8xl mb-6 animate-bounce">✈️</div>
-                <h1 class="text-5xl font-extrabold text-purple-700 mb-6">Thank You, <span id="summaryName" class="text-gradient">Traveler</span>!</h1>
-                
-                <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 mb-8 text-left">
-                    <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">Your Booking Summary</h2>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-700 font-medium">Destination:</span>
-                            <span id="summaryDestination" class="font-semibold text-purple-600">Selected</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-700 font-medium">Your Rating:</span>
-                            <span id="summaryRating" class="font-semibold text-purple-600">-</span>
+        <section class="section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="card">
+                            <div class="card-body p-5 text-center">
+                                <i class="fas fa-plane" style="font-size: 80px; color: #00bcd4; margin-bottom: 30px;"></i>
+                                <h1>Thank You, <span id="summaryName">Traveler</span>!</h1>
+                                
+                                <div class="card mt-4 mb-4" style="background-color: #f5f5f5;">
+                                    <div class="card-body">
+                                        <h3 class="mb-3">Your Booking Summary</h3>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span><strong>Destination:</strong></span>
+                                            <span id="summaryDestination" class="text-primary">Selected</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span><strong>Your Rating:</strong></span>
+                                            <span id="summaryRating" class="text-primary">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <p class="mb-4">Your travel experience has been successfully simulated. We hope you enjoyed your journey through VoyageFlow!</p>
+                                
+                                <button id="startOverBtn" class="btn-secondary mb-4">
+                                    <i class="fas fa-redo"></i> Start Over
+                                </button>
+                                
+                                <div class="social-icons justify-content-center">
+                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <p class="text-gray-700 text-lg mb-4">Your travel experience has been successfully simulated.</p>
-                <p class="text-gray-600 mb-8">We hope you enjoyed your journey through VoyageFlow!</p>
-                
-                <button id="startOverBtn" class="border-2 border-purple-600 rounded-full px-8 py-3 text-purple-600 font-semibold hover:bg-purple-600 hover:text-white transition-transform hover:scale-105 mb-8 hover-lift">
-                    Start Over
-                </button>
-                
-                <div class="flex justify-center space-x-8 mt-8 text-gray-600">
-                    <a href="#" class="hover:text-purple-700 transition text-4xl hover:scale-110" title="Facebook">📘</a>
-                    <a href="#" class="hover:text-purple-700 transition text-4xl hover:scale-110" title="Twitter">🐦</a>
-                    <a href="#" class="hover:text-purple-700 transition text-4xl hover:scale-110" title="Instagram">📷</a>
-                    <a href="#" class="hover:text-purple-700 transition text-4xl hover:scale-110" title="LinkedIn">💼</a>
-                </div>
             </div>
-        </div>
+        </section>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>VoyageFlow</h5>
+                    <p>Your trusted partner for planning amazing travel experiences around the world.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#page1">Home</a></li>
+                        <li><a href="#page2">Destinations</a></li>
+                        <li><a href="#page2b">Select Destination</a></li>
+                        <li><a href="#page3">Plan Trip</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Contact</h5>
+                    <p><i class="fas fa-envelope"></i> info@voyageflow.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VoyageFlow. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Destination Data -->
+    <script src="data/destinations.js"></script>
+    
+    <!-- Utility Functions -->
+    <script src="js/utils.js"></script>
+    
+    <!-- Navigation -->
+    <script src="js/navigation.js"></script>
+    
+    <!-- Carousel -->
+    <script src="js/carousel.js"></script>
+    
+    <!-- Page Scripts -->
+    <script src="js/pages/registration.js"></script>
+    <script src="js/pages/blog.js"></script>
+    <script src="js/pages/destination-selection.js"></script>
+    <script src="js/pages/calculator.js"></script>
+    <script src="js/pages/review.js"></script>
+    <script src="js/pages/thankyou.js"></script>
+    
+    <!-- Initialize Destination Selection -->
+    <script>
+        // Make destinationsData globally available
+        window.destinationsData = typeof destinationsData !== 'undefined' ? destinationsData : {};
+        
+        // Populate destination cards
+        function populateDestinationCards() {
+            const grid = document.getElementById('destinationGrid');
+            if (grid && window.destinationsData && Object.keys(window.destinationsData).length > 0) {
+                grid.innerHTML = ''; // Clear existing
+                Object.keys(window.destinationsData).forEach(key => {
+                    const dest = window.destinationsData[key];
+                    const col = document.createElement('div');
+                    col.className = 'col-md-4';
+                    col.innerHTML = `
+                        <div class="destination-card" data-destination="${key}">
+                            <img src="${dest.image}" class="destination-card-img" alt="${dest.name}">
+                            <div class="destination-card-body">
+                                <h3 class="destination-card-title">${dest.name}</h3>
+                                <p class="destination-card-text">${dest.description}</p>
+                                <div class="destination-card-footer">
+                                    <span class="destination-price">From ${formatCurrency(dest.basePrice)}</span>
+                                    <span class="destination-rating">⭐ 4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(col);
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait for destinationsData to load
+            if (typeof destinationsData !== 'undefined') {
+                window.destinationsData = destinationsData;
+                populateDestinationCards();
+            } else {
+                // Try again after a short delay
+                setTimeout(() => {
+                    if (typeof destinationsData !== 'undefined') {
+                        window.destinationsData = destinationsData;
+                        populateDestinationCards();
+                    }
+                }, 100);
+            }
+        });
+    </script>
 </body>
 </html>

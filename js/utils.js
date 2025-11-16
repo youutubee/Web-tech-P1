@@ -1,0 +1,159 @@
+// ============================================
+// Utility Functions
+// ============================================
+
+// Format currency
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0
+    }).format(amount);
+}
+
+// Update progress bar
+function updateProgressBar(currentPage, totalPages) {
+    const progressBar = document.getElementById('progressBar');
+    if (progressBar) {
+        const progress = (currentPage / totalPages) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+}
+
+// Show page
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo(0, 0);
+    }
+}
+
+// Show modal
+function showModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Hide modal
+function hideModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Close modal on outside click
+function setupModalClose(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                hideModal(modalId);
+            }
+        });
+    }
+}
+
+// Validate email
+function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Validate phone (10 digits)
+function validatePhone(phone) {
+    return /^\d{10}$/.test(phone);
+}
+
+// Validate PIN (6 digits)
+function validatePIN(pin) {
+    return /^\d{6}$/.test(pin);
+}
+
+// Validate name
+function validateName(name) {
+    return name.trim().length >= 2 && /^[a-zA-Z\s]+$/.test(name);
+}
+
+// Show error message
+function showError(input, errorElement, message) {
+    if (input) input.classList.add('error');
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.classList.add('show');
+    }
+}
+
+// Clear error message
+function clearError(input, errorElement) {
+    if (input) input.classList.remove('error');
+    if (errorElement) errorElement.classList.remove('show');
+}
+
+// Store data in session storage
+function storeData(key, value) {
+    sessionStorage.setItem(key, JSON.stringify(value));
+}
+
+// Get data from session storage
+function getData(key) {
+    const data = sessionStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
+}
+
+// Clear all session data
+function clearSessionData() {
+    sessionStorage.clear();
+}
+
+// Debounce function
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Smooth scroll to element
+function scrollToElement(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+// Export functions
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        formatCurrency,
+        updateProgressBar,
+        showPage,
+        showModal,
+        hideModal,
+        setupModalClose,
+        validateEmail,
+        validatePhone,
+        validatePIN,
+        validateName,
+        showError,
+        clearError,
+        storeData,
+        getData,
+        clearSessionData,
+        debounce,
+        scrollToElement
+    };
+}
+
