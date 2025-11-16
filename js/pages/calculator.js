@@ -10,10 +10,13 @@ let selectedItems = {
 };
 
 function initCalculatorPage() {
-    // Load destination data
-    const selectedDestination = getData('selectedDestination');
+    // Load destination data from URL parameter or localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedDestination = urlParams.get('destination') || getData('selectedDestination') || localStorage.getItem('selectedDestination');
     if (!selectedDestination) {
         console.error('No destination selected');
+        // Redirect to destinations page if no destination selected
+        window.location.href = 'destinations.html';
         return;
     }
 
@@ -82,8 +85,24 @@ function initCalculatorPage() {
     if (modalConfirmBtn) {
         modalConfirmBtn.addEventListener('click', () => {
             hideModal('confirmModal');
-            showPage('page4');
-            updateProgressBar(5, 5);
+            // Store booking data and redirect to thank you page
+            const numAdults = parseInt(document.getElementById('numAdults')?.value || document.getElementById('numPeople')?.value || 1);
+            const numChildren = parseInt(document.getElementById('numChildren')?.value || 0);
+            const numInfants = parseInt(document.getElementById('numInfants')?.value || 0);
+            const tripDate = document.getElementById('tripDate')?.value || '';
+            const tripDuration = parseInt(document.getElementById('tripDuration')?.value || 7);
+            
+            const bookingData = {
+                totalPrice: calculateTotal(),
+                numPeople: numAdults + numChildren,
+                numAdults: numAdults,
+                numChildren: numChildren,
+                numInfants: numInfants,
+                tripDate: tripDate,
+                tripDuration: tripDuration
+            };
+            localStorage.setItem('bookingData', JSON.stringify(bookingData));
+            window.location.href = 'thankyou.html';
         });
     }
 
@@ -146,8 +165,14 @@ function calculateTotal() {
         activity: []
     };
 
-    // Get number of people
-    const numPeople = parseInt(getData('numPeople')) || 1;
+    // Get number of people (adults + children, infants are usually free)
+    const numAdults = parseInt(getData('numAdults')) || parseInt(localStorage.getItem('numAdults')) || 1;
+    const numChildren = parseInt(getData('numChildren')) || parseInt(localStorage.getItem('numChildren')) || 0;
+    const numInfants = parseInt(getData('numInfants')) || parseInt(localStorage.getItem('numInfants')) || 0;
+    const numPeople = parseInt(getData('numPeople')) || parseInt(localStorage.getItem('numPeople')) || (numAdults + numChildren);
+    
+    // Get trip duration
+    const tripDuration = parseInt(document.getElementById('tripDuration')?.value) || 7;
 
     const checkboxes = document.querySelectorAll('.custom-checkbox');
     checkboxes.forEach(checkbox => {
@@ -156,9 +181,26 @@ function calculateTotal() {
             const category = checkbox.getAttribute('data-category');
             const label = checkbox.closest('label')?.querySelector('.package-option-name')?.textContent || 'Item';
             
-            // Multiply travel (flight tickets) by number of people
+            // Calculate item price based on category
             let itemPrice = price;
+            let quantity = 1;
+            
             if (category === 'travel') {
+                // Travel: multiply by number of travelers (adults + children)
+                quantity = numPeople;
+                itemPrice = price * numPeople;
+            } else if (category === 'accommodation') {
+                // Accommodation: multiply by number of rooms needed (1 room per 2 adults, children can share)
+                const roomsNeeded = Math.ceil((numAdults + Math.ceil(numChildren / 2)) / 2);
+                quantity = roomsNeeded;
+                itemPrice = price * roomsNeeded * tripDuration; // Per night * duration
+            } else if (category === 'food') {
+                // Food: multiply by number of travelers and duration
+                quantity = numPeople;
+                itemPrice = price * numPeople * tripDuration; // Per person per day
+            } else if (category === 'activity') {
+                // Activities: multiply by number of travelers
+                quantity = numPeople;
                 itemPrice = price * numPeople;
             }
             
@@ -166,8 +208,9 @@ function calculateTotal() {
             selectedItems[category].push({
                 label: label,
                 price: price,
-                quantity: category === 'travel' ? numPeople : 1,
-                totalPrice: itemPrice
+                quantity: quantity,
+                totalPrice: itemPrice,
+                unitPrice: price
             });
         }
     });
@@ -188,14 +231,30 @@ function updatePriceBreakdown(total) {
     const breakdownContainer = document.getElementById('priceBreakdown');
     if (!breakdownContainer) return;
 
-    const numPeople = parseInt(getData('numPeople')) || 1;
+    const numAdults = parseInt(getData('numAdults')) || parseInt(localStorage.getItem('numAdults')) || 1;
+    const numChildren = parseInt(getData('numChildren')) || parseInt(localStorage.getItem('numChildren')) || 0;
+    const numInfants = parseInt(getData('numInfants')) || parseInt(localStorage.getItem('numInfants')) || 0;
+    const numPeople = numAdults + numChildren;
+    const tripDuration = parseInt(document.getElementById('tripDuration')?.value) || 7;
+    const tripDate = document.getElementById('tripDate')?.value || 'Not selected';
+    
     let html = '<div class="price-breakdown">';
     
-    // Show number of people
+    // Show trip details
     html += `
         <div class="price-breakdown-item" style="background: rgba(0, 188, 212, 0.05); padding: 12px; border-radius: 6px; margin-bottom: 10px;">
-            <span class="price-breakdown-label"><i class="fas fa-users"></i> Travelers:</span>
-            <span class="price-breakdown-value">${numPeople} ${numPeople === 1 ? 'person' : 'people'}</span>
+            <div style="margin-bottom: 8px;">
+                <span class="price-breakdown-label"><i class="fas fa-calendar"></i> Travel Date:</span>
+                <span class="price-breakdown-value">${tripDate}</span>
+            </div>
+            <div style="margin-bottom: 8px;">
+                <span class="price-breakdown-label"><i class="fas fa-clock"></i> Duration:</span>
+                <span class="price-breakdown-value">${tripDuration} day${tripDuration > 1 ? 's' : ''}</span>
+            </div>
+            <div>
+                <span class="price-breakdown-label"><i class="fas fa-users"></i> Travelers:</span>
+                <span class="price-breakdown-value">${numAdults} adult${numAdults > 1 ? 's' : ''}${numChildren > 0 ? `, ${numChildren} child${numChildren > 1 ? 'ren' : ''}` : ''}${numInfants > 0 ? `, ${numInfants} infant${numInfants > 1 ? 's' : ''}` : ''}</span>
+            </div>
         </div>
     `;
     
@@ -203,21 +262,31 @@ function updatePriceBreakdown(total) {
     const categoryLabels = {
         accommodation: 'Accommodation',
         travel: 'Travel (Flight Tickets)',
-        food: 'Food',
+        food: 'Food Packages',
         activity: 'Activities'
     };
 
     categories.forEach(category => {
         if (selectedItems[category].length > 0) {
             const categoryTotal = selectedItems[category].reduce((sum, item) => sum + (item.totalPrice || item.price), 0);
-            const quantity = category === 'travel' ? selectedItems[category].reduce((sum, item) => sum + (item.quantity || 1), 0) : null;
+            const items = selectedItems[category];
             
             html += `
                 <div class="price-breakdown-item">
-                    <span class="price-breakdown-label">
-                        ${categoryLabels[category]}
-                        ${quantity ? ` (${quantity} ticket${quantity > 1 ? 's' : ''})` : ''}
-                    </span>
+                    <div>
+                        <span class="price-breakdown-label">${categoryLabels[category]}</span>
+                        <div style="margin-top: 4px; font-size: 12px; color: #666;">
+            `;
+            
+            items.forEach(item => {
+                const qty = item.quantity || 1;
+                const unitPrice = item.unitPrice || item.price;
+                html += `${item.label}: ${formatCurrency(unitPrice)} × ${qty} = ${formatCurrency(item.totalPrice)}<br>`;
+            });
+            
+            html += `
+                        </div>
+                    </div>
                     <span class="price-breakdown-value">${formatCurrency(categoryTotal)}</span>
                 </div>
             `;

@@ -1,700 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoyageFlow — Interactive Travel Experience Simulator</title>
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VoyageFlow — Your Journey Starts Here</title>
+
     <!-- Bootstrap 5.2.0 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/components.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
     <!-- Progress Bar -->
     <div class="progress-container">
-        <div id="progressBar" class="progress-bar" style="width: 20%;"></div>
+      <div id="progressBar" class="progress-bar" style="width: 20%"></div>
     </div>
 
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center w-100">
-                <a class="navbar-brand" href="#">
-                    <i class="fas fa-plane"></i> VoyageFlow
-                </a>
-                <button class="navbar-toggler" type="button">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul class="navbar-nav">
-                    <li><a class="nav-link" href="#page1" onclick="showPage('page1')">Home</a></li>
-                    <li class="nav-dropdown">
-                        <a class="nav-dropdown-toggle" href="javascript:void(0)">
-                            Destinations <i class="fas fa-chevron-down"></i>
-                        </a>
-                        <div class="nav-dropdown-menu">
-                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="showPage('page2')">Browse All</a>
-                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="showPage('page2b')">Select Destination</a>
-                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('paris')">Paris</a>
-                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('tokyo')">Tokyo</a>
-                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('rome')">Rome</a>
-                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('bali')">Bali</a>
-                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('santorini')">Santorini</a>
-                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="scrollToElement('dubai')">Dubai</a>
-                        </div>
-                    </li>
-                    <li class="nav-dropdown">
-                        <a class="nav-dropdown-toggle" href="javascript:void(0)">
-                            Plans <i class="fas fa-chevron-down"></i>
-                        </a>
-                        <div class="nav-dropdown-menu">
-                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="showPage('page3')">Plan Your Trip</a>
-                            <a class="nav-dropdown-item" href="javascript:void(0)" onclick="showPage('page2b')">Choose Destination</a>
-                            <a class="nav-dropdown-item" href="javascript:void(0)">Travel Packages</a>
-                            <a class="nav-dropdown-item" href="javascript:void(0)">Custom Itinerary</a>
-                        </div>
-                    </li>
-                    <li><a class="nav-link" href="#page3" onclick="showPage('page3')">Calculator</a></li>
-                    <li><a class="nav-link" href="#page4" onclick="showPage('page4')">Review</a></li>
-                </ul>
-            </div>
+      <div class="container">
+        <div class="navbar-wrapper">
+          <a class="navbar-brand" href="index.html">
+            <i class="fas fa-plane"></i> VoyageFlow
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul class="navbar-nav">
+            <li>
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-dropdown">
+              <a
+                class="nav-dropdown-toggle"
+                href="javascript:void(0)"
+                aria-expanded="false"
+              >
+                Destinations <i class="fas fa-chevron-down"></i>
+              </a>
+              <div class="nav-dropdown-menu">
+                <a class="nav-dropdown-item" href="destinations.html"
+                  >Browse All</a
+                >
+              </div>
+            </li>
+            <li>
+              <a class="nav-link" href="login.html">Login</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
-    <!-- Page 1: Registration Form -->
-    <div id="page1" class="page active">
-        <!-- Hero Carousel -->
-        <div id="heroCarousel" class="carousel-container">
-            <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920');">
-                <div class="carousel-overlay"></div>
-                <div class="carousel-content">
-                    <h1>Welcome to VoyageFlow</h1>
-                    <p>Your journey to amazing destinations starts here</p>
-                </div>
-            </div>
-            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920');">
-                <div class="carousel-overlay"></div>
-                <div class="carousel-content">
-                    <h1>Discover the World</h1>
-                    <p>Explore breathtaking destinations and create unforgettable memories</p>
-                </div>
-            </div>
-            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920');">
-                <div class="carousel-overlay"></div>
-                <div class="carousel-content">
-                    <h1>Plan Your Adventure</h1>
-                    <p>Customize your perfect trip with our easy-to-use platform</p>
-                </div>
-            </div>
-            <button class="carousel-controls carousel-prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="carousel-controls carousel-next"><i class="fas fa-chevron-right"></i></button>
-            <div class="carousel-indicators">
-                <span class="carousel-indicator active"></span>
-                <span class="carousel-indicator"></span>
-                <span class="carousel-indicator"></span>
-            </div>
+    <!-- Hero Carousel -->
+    <div id="heroCarousel" class="carousel-container">
+      <div
+        class="carousel-slide active"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920');
+        "
+      >
+        <div class="carousel-overlay"></div>
+        <div class="carousel-content">
+          <h1>Welcome to VoyageFlow</h1>
+          <p>Your journey to amazing destinations starts here</p>
+          <a href="login.html" class="btn-primary btn-lg mt-4" style="display: inline-block;">
+            <i class="fas fa-arrow-right"></i> Get Started
+          </a>
         </div>
-
-        <!-- Registration Form Section -->
-        <section class="section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Get Started</h2>
-                    <p>Register to begin planning your dream vacation</p>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6">
-                        <div class="card registration-card">
-                            <div class="card-body p-5">
-                                <div class="text-center mb-4">
-                                    <i class="fas fa-user-circle" style="font-size: 48px; color: var(--primary-color); margin-bottom: 15px;"></i>
-                                    <h3 style="color: var(--text-color); margin-bottom: 8px;">Create Your Account</h3>
-                                    <p class="text-muted">Fill in your details to get started</p>
-                                </div>
-                                <form id="registrationForm">
-                                    <div class="form-group">
-                                        <label class="form-label" for="fullName">
-                                            <i class="fas fa-user"></i> Full Name
-                                        </label>
-                                        <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
-                                        <span class="error-message" id="nameError"></span>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label" for="phoneNumber">
-                                            <i class="fas fa-phone"></i> Phone Number
-                                        </label>
-                                        <input type="tel" class="form-control" id="phoneNumber" placeholder="10 digits only" required>
-                                        <span class="error-message" id="phoneError"></span>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label" for="pinCode">
-                                            <i class="fas fa-lock"></i> PIN Code
-                                        </label>
-                                        <input type="text" class="form-control" id="pinCode" placeholder="6 digits only" required>
-                                        <span class="error-message" id="pinError"></span>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label" for="email">
-                                            <i class="fas fa-envelope"></i> Email Address
-                                        </label>
-                                        <input type="email" class="form-control" id="email" placeholder="user@domain.com" required>
-                                        <span class="error-message" id="emailError"></span>
-                                    </div>
-                                    
-                                    <button type="submit" class="btn-primary btn-submit w-100 mt-3">
-                                        <i class="fas fa-arrow-right"></i> Submit & Continue
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Popular Destinations Preview -->
-        <section class="section section-gray">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Popular Destinations</h2>
-                    <p>Explore our most loved travel destinations</p>
-                </div>
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" class="card-img" alt="Paris">
-                            <div class="card-body">
-                                <h5 class="card-title">Paris, France</h5>
-                                <p class="card-text">The City of Light with iconic landmarks</p>
-                                <div class="card-price">From $800</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800" class="card-img" alt="Tokyo">
-                            <div class="card-body">
-                                <h5 class="card-title">Tokyo, Japan</h5>
-                                <p class="card-text">Ancient traditions meet modern innovation</p>
-                                <div class="card-price">From $1,200</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img src="https://images.unsplash.com/photo-1529260830199-42c24126f198?w=800" class="card-img" alt="Rome">
-                            <div class="card-body">
-                                <h5 class="card-title">Rome, Italy</h5>
-                                <p class="card-text">Eternal City with rich history</p>
-                                <div class="card-price">From $900</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Success Modal -->
-    <div id="successModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close">&times;</button>
-            <div class="text-center">
-                <i class="fas fa-check-circle" style="font-size: 64px; color: #00bcd4; margin-bottom: 20px;"></i>
-                <h2>Registration Successful!</h2>
-                <p class="mb-4">Welcome to VoyageFlow. Let's start your journey!</p>
-                <button id="modalCloseBtn" class="btn-primary btn-continue">Continue</button>
-            </div>
+      </div>
+      <div
+        class="carousel-slide"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920');
+        "
+      >
+        <div class="carousel-overlay"></div>
+        <div class="carousel-content">
+          <h1>Discover the World</h1>
+          <p>
+            Explore breathtaking destinations and create unforgettable
+            memories
+          </p>
+          <a href="destinations.html" class="btn-primary btn-lg mt-4" style="display: inline-block;">
+            <i class="fas fa-map-marked-alt"></i> Explore Destinations
+          </a>
         </div>
-    </div>
-
-    <!-- Page 2: Travel Blog -->
-    <div id="page2" class="page">
-        <div class="blog-nav">
-            <div class="container">
-                <div class="blog-nav-links">
-                    <a href="#paris" class="blog-nav-link active" data-section="paris">Paris</a>
-                    <a href="#tokyo" class="blog-nav-link" data-section="tokyo">Tokyo</a>
-                    <a href="#rome" class="blog-nav-link" data-section="rome">Rome</a>
-                    <a href="#bali" class="blog-nav-link" data-section="bali">Bali</a>
-                    <a href="#santorini" class="blog-nav-link" data-section="santorini">Santorini</a>
-                    <a href="#dubai" class="blog-nav-link" data-section="dubai">Dubai</a>
-                </div>
-            </div>
+      </div>
+      <div
+        class="carousel-slide"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920');
+        "
+      >
+        <div class="carousel-overlay"></div>
+        <div class="carousel-content">
+          <h1>Plan Your Adventure</h1>
+          <p>Customize your perfect trip with our easy-to-use platform</p>
+          <a href="login.html" class="btn-primary btn-lg mt-4" style="display: inline-block;">
+            <i class="fas fa-calendar-check"></i> Start Planning
+          </a>
         </div>
+      </div>
+      <button class="carousel-controls carousel-prev">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="carousel-controls carousel-next">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      <div class="carousel-indicators">
+        <span class="carousel-indicator active"></span>
+        <span class="carousel-indicator"></span>
+        <span class="carousel-indicator"></span>
+      </div>
+    </div>
 
-        <section id="paris" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920');">
-            <div class="blog-content">
-                <h2>Paris, France</h2>
-                <p>The City of Light awaits you with its iconic Eiffel Tower, world-class museums, and charming streets.</p>
-                <p>Experience the romance of Montmartre, the elegance of the Champs-Élysées, and the artistic heritage of the Louvre Museum.</p>
-                <p>From art galleries to exquisite cuisine, Paris offers an unforgettable cultural journey. Best visited in spring (April-June) or fall (September-November) for pleasant weather.</p>
-                <div class="blog-tags">
-                    <span class="blog-tag">🏛️ Museums</span>
-                    <span class="blog-tag">🍷 Wine Tours</span>
-                    <span class="blog-tag">🎨 Art & Culture</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="tokyo" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1920');">
-            <div class="blog-content">
-                <h2>Tokyo, Japan</h2>
-                <p>A mesmerizing blend of ancient traditions and cutting-edge technology.</p>
-                <p>Explore vibrant neighborhoods like Shibuya and Harajuku, savor authentic sushi at Tsukiji Market, and witness the beauty of cherry blossoms in spring.</p>
-                <p>From serene temples like Senso-ji to neon-lit streets of Shinjuku, Tokyo is a city of contrasts and endless discoveries.</p>
-                <div class="blog-tags">
-                    <span class="blog-tag">🍣 Sushi & Ramen</span>
-                    <span class="blog-tag">🏯 Temples</span>
-                    <span class="blog-tag">🌸 Cherry Blossoms</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="rome" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1529260830199-42c24126f198?w=1920');">
-            <div class="blog-content">
-                <h2>Rome, Italy</h2>
-                <p>Step into history as you wander through ancient ruins, magnificent churches, and piazzas.</p>
-                <p>Visit the Colosseum, explore the Vatican City, and toss a coin in the Trevi Fountain. Indulge in authentic Italian cuisine and gelato while exploring the Eternal City.</p>
-                <p>Every corner tells a story in this timeless city where past and present coexist beautifully.</p>
-                <div class="blog-tags">
-                    <span class="blog-tag">🏛️ Ancient History</span>
-                    <span class="blog-tag">🍝 Italian Cuisine</span>
-                    <span class="blog-tag">⛪ Vatican City</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="bali" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1920');">
-            <div class="blog-content">
-                <h2>Bali, Indonesia</h2>
-                <p>Tropical paradise with stunning beaches, lush rice terraces, and rich cultural heritage.</p>
-                <p>Experience world-class resorts in Ubud, visit ancient temples like Tanah Lot, and enjoy breathtaking sunsets at Uluwatu.</p>
-                <p>A perfect blend of relaxation, adventure, and spiritual rejuvenation awaits in Bali.</p>
-                <div class="blog-tags">
-                    <span class="blog-tag">🏖️ Beaches</span>
-                    <span class="blog-tag">🧘 Wellness</span>
-                    <span class="blog-tag">🌴 Rice Terraces</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="santorini" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=1920');">
-            <div class="blog-content">
-                <h2>Santorini, Greece</h2>
-                <p>White-washed buildings perched on cliffs overlooking the azure Aegean Sea.</p>
-                <p>Enjoy spectacular sunsets in Oia, explore ancient ruins in Akrotiri, and relax on unique black sand beaches.</p>
-                <p>A romantic island destination that promises unforgettable memories and stunning vistas.</p>
-                <div class="blog-tags">
-                    <span class="blog-tag">🌅 Sunsets</span>
-                    <span class="blog-tag">🏖️ Beaches</span>
-                    <span class="blog-tag">🍷 Wine Tasting</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="dubai" class="blog-section" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920');">
-            <div class="blog-content">
-                <h2>Dubai, UAE</h2>
-                <p>A futuristic city where luxury meets innovation in the heart of the desert.</p>
-                <p>Marvel at the Burj Khalifa, shop in world-class malls, experience desert safaris, and enjoy luxury resorts.</p>
-                <p>Perfect for luxury travel, shopping, and adventure. Best time to visit: November to March.</p>
-                <div class="blog-tags">
-                    <span class="blog-tag">🏙️ Modern Architecture</span>
-                    <span class="blog-tag">🛍️ Shopping</span>
-                    <span class="blog-tag">🏜️ Desert Safari</span>
-                </div>
-            </div>
-        </section>
-
-        <div class="fab">
-            <button id="nextToPage2b" class="btn-primary btn-continue" style="border-radius: 50px; padding: 12px 24px;">
-                <i class="fas fa-arrow-right"></i> Select Destination
-            </button>
+    <!-- Popular Destinations Preview -->
+    <section class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Popular Destinations</h2>
+          <p>Explore our most loved travel destinations</p>
         </div>
-    </div>
-
-    <!-- Page 2b: Destination Selection -->
-    <div id="page2b" class="page">
-        <section class="section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Choose Your Destination</h2>
-                    <p>Select your dream destination to continue</p>
-                </div>
-                <div class="row g-4" id="destinationGrid">
-                    <!-- Destination cards will be populated by JavaScript -->
-                </div>
-                <div class="text-center mt-5">
-                    <button id="nextToPage3" class="btn-primary btn-lg disabled" disabled>
-                        Continue to Planning <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card">
+              <img
+                src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800"
+                class="card-img"
+                alt="Paris"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Paris, France</h5>
+                <p class="card-text">
+                  The City of Light with iconic landmarks
+                </p>
+                <div class="card-price">From $800</div>
+                <a href="destinations.html" class="btn-primary btn-sm">
+                  Explore <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
             </div>
-        </section>
-    </div>
-
-    <!-- Page 3: Trip Calculator -->
-    <div id="page3" class="page">
-        <section class="section">
-            <div class="container">
-                <div class="section-title">
-                    <h2 class="page-title">Plan Your Trip</h2>
-                    <p>Customize your travel experience</p>
-                </div>
-                
-                <!-- Destination Banner -->
-                <div class="destination-banner mb-4"></div>
-
-                <!-- People Selector -->
-                <div class="card mb-4">
-                    <div class="card-body p-4">
-                        <h3 class="mb-4"><i class="fas fa-users"></i> Number of Travelers</h3>
-                        <div class="people-selector">
-                            <div class="form-group">
-                                <label class="form-label" for="numPeople">How many people are traveling?</label>
-                                <div class="people-input-group">
-                                    <button class="btn-people-decrease" type="button">-</button>
-                                    <input type="number" class="form-control text-center" id="numPeople" value="1" min="1" max="10" readonly>
-                                    <button class="btn-people-increase" type="button">+</button>
-                                </div>
-                                <div id="peopleWarning" class="alert alert-warning mt-3 d-none">
-                                    <i class="fas fa-exclamation-triangle"></i> For groups of 6+ people, please contact us for custom packages. Limited customization available.
-                                </div>
-                                <div id="ticketChecker" class="ticket-checker mt-3">
-                                    <small class="text-muted"><i class="fas fa-info-circle"></i> Maximum 4 flight tickets can be selected per booking</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Accommodation -->
-                <div class="card mb-4">
-                    <div class="card-body p-4">
-                        <h3 class="mb-4"><i class="fas fa-hotel"></i> Accommodation</h3>
-                        <div id="accommodationOptions"></div>
-                    </div>
-                </div>
-
-                <!-- Travel -->
-                <div class="card mb-4">
-                    <div class="card-body p-4">
-                        <h3 class="mb-4"><i class="fas fa-plane"></i> Travel Options</h3>
-                        <div id="travelOptions"></div>
-                    </div>
-                </div>
-
-                <!-- Food -->
-                <div class="card mb-4">
-                    <div class="card-body p-4">
-                        <h3 class="mb-4"><i class="fas fa-utensils"></i> Food Packages</h3>
-                        <div id="foodOptions"></div>
-                    </div>
-                </div>
-
-                <!-- Activities -->
-                <div class="card mb-4">
-                    <div class="card-body p-4">
-                        <h3 class="mb-4"><i class="fas fa-map-marked-alt"></i> Activities & Experiences</h3>
-                        <div id="activityOptions"></div>
-                    </div>
-                </div>
-
-                <!-- Price Breakdown -->
-                <div class="card mb-4">
-                    <div class="card-body p-4">
-                        <h3 class="mb-4">Price Breakdown</h3>
-                        <div id="priceBreakdown">
-                            <p class="text-center text-muted">Select items to see price breakdown</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Confirm Button -->
-                <div class="text-center">
-                    <button id="confirmBooking" class="btn-primary btn-confirm btn-lg">
-                        Confirm Booking <i class="fas fa-check"></i>
-                    </button>
-                </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <img
+                src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800"
+                class="card-img"
+                alt="Tokyo"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Tokyo, Japan</h5>
+                <p class="card-text">
+                  Ancient traditions meet modern innovation
+                </p>
+                <div class="card-price">From $1,200</div>
+                <a href="destinations.html" class="btn-primary btn-sm">
+                  Explore <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
             </div>
-        </section>
-
-        <!-- Total Price Footer -->
-        <div class="total-price-footer">
-            <div class="total-price-content">
-                <span class="total-price-label">Total Price:</span>
-                <span id="totalPrice" class="total-price-value">$0</span>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <img
+                src="https://images.unsplash.com/photo-1529260830199-42c24126f198?w=800"
+                class="card-img"
+                alt="Rome"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Rome, Italy</h5>
+                <p class="card-text">Eternal City with rich history</p>
+                <div class="card-price">From $900</div>
+                <a href="destinations.html" class="btn-primary btn-sm">
+                  Explore <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-
-    <!-- Confirmation Modal -->
-    <div id="confirmModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close">&times;</button>
-            <div class="text-center">
-                <i class="fas fa-check-circle" style="font-size: 64px; color: #00bcd4; margin-bottom: 20px;"></i>
-                <h2>Booking Confirmed!</h2>
-                <p class="mb-2">Your trip has been successfully planned.</p>
-                <p id="finalPrice" class="mb-4" style="font-size: 24px; font-weight: 700; color: #00bcd4;">Total: $0</p>
-                <button id="modalConfirmBtn" class="btn-primary btn-continue">Continue to Review</button>
-            </div>
+        <div class="text-center mt-5">
+          <a href="destinations.html" class="btn-primary btn-lg">
+            View All Destinations <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <!-- Page 4: Review -->
-    <div id="page4" class="page">
-        <section class="section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6">
-                        <div class="card">
-                            <div class="card-body p-5">
-                                <div class="section-title">
-                                    <h2>Share Your Experience</h2>
-                                    <p>Help us improve by sharing your thoughts</p>
-                                </div>
-                                <form id="reviewForm">
-                                    <div class="form-group text-center">
-                                        <label class="form-label mb-3">Rate Your Experience</label>
-                                        <div class="star-rating">
-                                            <span class="star" data-rating="1">☆</span>
-                                            <span class="star" data-rating="2">☆</span>
-                                            <span class="star" data-rating="3">☆</span>
-                                            <span class="star" data-rating="4">☆</span>
-                                            <span class="star" data-rating="5">☆</span>
-                                        </div>
-                                        <p id="ratingDisplay" class="text-muted mt-2">Click stars to rate</p>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label" for="reviewText">Your Review</label>
-                                        <textarea class="form-control" id="reviewText" rows="5" placeholder="Tell us about your experience..."></textarea>
-                                    </div>
-                                    
-                                    <div id="reviewSuccess" class="alert alert-success d-none" role="alert">
-                                        Thank you for your feedback! Redirecting...
-                                    </div>
-                                    
-                                    <div class="d-flex gap-3">
-                                        <button type="submit" class="btn-primary btn-submit flex-fill">Submit Review</button>
-                                        <button type="button" id="nextToPage5" class="btn-secondary btn-skip flex-fill">Skip</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Page 5: Thank You -->
-    <div id="page5" class="page">
-        <section class="section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6">
-                        <div class="card">
-                            <div class="card-body p-5 text-center">
-                                <i class="fas fa-plane" style="font-size: 80px; color: #00bcd4; margin-bottom: 30px;"></i>
-                                <h1>Thank You, <span id="summaryName">Traveler</span>!</h1>
-                                
-                                <div class="card mt-4 mb-4" style="background-color: #f5f5f5;">
-                                    <div class="card-body">
-                                        <h3 class="mb-3">Your Booking Summary</h3>
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <span><strong>Destination:</strong></span>
-                                            <span id="summaryDestination" class="text-primary">Selected</span>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <span><strong>Your Rating:</strong></span>
-                                            <span id="summaryRating" class="text-primary">-</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <p class="mb-4">Your travel experience has been successfully simulated. We hope you enjoyed your journey through VoyageFlow!</p>
-                                
-                                <button id="startOverBtn" class="btn-secondary btn-start-over mb-4">
-                                    <i class="fas fa-redo"></i> Start Over
-                                </button>
-                                
-                                <div class="social-icons justify-content-center">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+    <!-- Features Section -->
+    <section class="section section-gray">
+      <div class="container">
+        <div class="section-title">
+          <h2>Why Choose VoyageFlow?</h2>
+          <p>Experience the best in travel planning</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4 text-center">
+            <i class="fas fa-globe" style="font-size: 48px; color: var(--primary-color); margin-bottom: 20px;"></i>
+            <h4>Worldwide Destinations</h4>
+            <p>Explore amazing destinations around the globe</p>
+          </div>
+          <div class="col-md-4 text-center">
+            <i class="fas fa-cog" style="font-size: 48px; color: var(--primary-color); margin-bottom: 20px;"></i>
+            <h4>Customizable Plans</h4>
+            <p>Tailor your trip to your preferences</p>
+          </div>
+          <div class="col-md-4 text-center">
+            <i class="fas fa-shield-alt" style="font-size: 48px; color: var(--primary-color); margin-bottom: 20px;"></i>
+            <h4>Secure Booking</h4>
+            <p>Safe and secure booking process</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5>VoyageFlow</h5>
-                    <p>Your trusted partner for planning amazing travel experiences around the world.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#page1">Home</a></li>
-                        <li><a href="#page2">Destinations</a></li>
-                        <li><a href="#page2b">Select Destination</a></li>
-                        <li><a href="#page3">Plan Trip</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5>Contact</h5>
-                    <p><i class="fas fa-envelope"></i> info@voyageflow.com</p>
-                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 VoyageFlow. All rights reserved.</p>
-            </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5>VoyageFlow</h5>
+            <p>
+              Your trusted partner for planning amazing travel experiences
+              around the world.
+            </p>
+           
+          </div>
+          <div class="col-md-4 mb-4">
+            <h5>Quick Links</h5>
+            <ul class="navbar-nav footer-nav">
+              <li>
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li>
+                <a class="nav-link" href="destinations.html">Destinations</a>
+              </li>
+              <li>
+                <a class="nav-link" href="login.html">Login</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h5>Contact</h5>
+            <p><i class="fas fa-envelope"></i> info@voyageflow.com</p>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025VoyageFlow. All rights reserved.</p>
+        </div>
+      </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Destination Data -->
-    <script src="data/destinations.js"></script>
-    
+
     <!-- Utility Functions -->
     <script src="js/utils.js"></script>
-    
+
     <!-- Navigation -->
     <script src="js/navigation.js"></script>
-    
+
     <!-- Carousel -->
     <script src="js/carousel.js"></script>
-    
-    <!-- Page Scripts -->
-    <script src="js/pages/registration.js"></script>
-    <script src="js/pages/blog.js"></script>
-    <script src="js/pages/destination-selection.js"></script>
-    <script src="js/pages/people-selector.js"></script>
-    <script src="js/pages/calculator.js"></script>
-    <script src="js/pages/review.js"></script>
-    <script src="js/pages/thankyou.js"></script>
-    
-    <!-- Initialize Destination Selection -->
+
+    <!-- Initialize Carousel -->
     <script>
-        // Make destinationsData globally available
-        window.destinationsData = typeof destinationsData !== 'undefined' ? destinationsData : {};
-        
-        // Populate destination cards
-        function populateDestinationCards() {
-            const grid = document.getElementById('destinationGrid');
-            if (grid && window.destinationsData && Object.keys(window.destinationsData).length > 0) {
-                grid.innerHTML = ''; // Clear existing
-                Object.keys(window.destinationsData).forEach(key => {
-                    const dest = window.destinationsData[key];
-                    const col = document.createElement('div');
-                    col.className = 'col-md-4';
-                    col.innerHTML = `
-                        <div class="destination-card" data-destination="${key}">
-                            <img src="${dest.image}" class="destination-card-img" alt="${dest.name}">
-                            <div class="destination-card-body">
-                                <h3 class="destination-card-title">${dest.name}</h3>
-                                <p class="destination-card-text">${dest.description}</p>
-                                <div class="destination-card-footer">
-                                    <span class="destination-price">From ${formatCurrency(dest.basePrice)}</span>
-                                    <span class="destination-rating">⭐ 4.8</span>
-                                </div>
-                                <button class="btn-select-destination btn-primary btn-sm" data-destination="${key}">
-                                    <i class="fas fa-check"></i> Select
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    grid.appendChild(col);
-                });
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize progress bar
-            updateProgressBarAuto();
-            
-            // Wait for destinationsData to load
-            if (typeof destinationsData !== 'undefined') {
-                window.destinationsData = destinationsData;
-                populateDestinationCards();
-            } else {
-                // Try again after a short delay
-                setTimeout(() => {
-                    if (typeof destinationsData !== 'undefined') {
-                        window.destinationsData = destinationsData;
-                        populateDestinationCards();
-                    }
-                }, 100);
-            }
+      document.addEventListener("DOMContentLoaded", () => {
+        updateProgressBarAuto();
+        const carousel = new Carousel("heroCarousel", {
+          autoplay: true,
+          interval: 5000,
         });
-        
-        // Re-initialize calculator when page3 becomes active
-        const page3Observer = new MutationObserver(() => {
-            const page3 = document.getElementById('page3');
-            if (page3 && page3.classList.contains('active')) {
-                setTimeout(() => {
-                    if (typeof initCalculatorPage === 'function') {
-                        initCalculatorPage();
-                    }
-                }, 100);
-            }
-        });
-        
-        const page3 = document.getElementById('page3');
-        if (page3) {
-            page3Observer.observe(page3, { attributes: true, attributeFilter: ['class'] });
-        }
-        
-        // Re-populate destination cards when page2b becomes active
-        const page2bObserver = new MutationObserver(() => {
-            const page2b = document.getElementById('page2b');
-            if (page2b && page2b.classList.contains('active')) {
-                setTimeout(() => {
-                    populateDestinationCards();
-                    if (typeof initDestinationSelection === 'function') {
-                        initDestinationSelection();
-                    }
-                }, 100);
-            }
-        });
-        
-        const page2b = document.getElementById('page2b');
-        if (page2b) {
-            page2bObserver.observe(page2b, { attributes: true, attributeFilter: ['class'] });
-        }
+      });
     </script>
-</body>
+  </body>
 </html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration — VoyageFlow</title>
+
+    <!-- Bootstrap 5.2.0 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div id="progressBar" class="progress-bar" style="width: 20%"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-wrapper">
+          <a class="navbar-brand" href="index.html">
+            <i class="fas fa-plane"></i> VoyageFlow
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul class="navbar-nav">
+            <li>
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-dropdown">
+              <a
+                class="nav-dropdown-toggle"
+                href="javascript:void(0)"
+                aria-expanded="false"
+              >
+                Destinations <i class="fas fa-chevron-down"></i>
+              </a>
+              <div class="nav-dropdown-menu">
+                <a class="nav-dropdown-item" href="destinations.html"
+                  >Browse All</a
+                >
+              </div>
+            </li>
+            <li>
+              <a class="nav-link" href="registration.html">Get Started</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="registration-hero">
+      <div class="registration-hero-overlay"></div>
+      <div class="container">
+        <div class="registration-hero-content">
+          <h1>Start Your Journey</h1>
+          <p>Create your account and begin planning your dream vacation</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <section class="section registration-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-10 col-lg-8">
+            <div class="registration-card-wrapper">
+              <div class="card registration-card">
+                <div class="registration-card-header">
+                  <div class="registration-icon-wrapper">
+                    <i class="fas fa-user-plus"></i>
+                  </div>
+                  <h2>Create Your Account</h2>
+                  <p>Fill in your details to get started with VoyageFlow</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                  <form id="registrationForm" class="registration-form">
+                    <div class="row g-4">
+                      <div class="col-md-6">
+                        <div class="form-group-enhanced">
+                          <label class="form-label-enhanced" for="fullName">
+                            <i class="fas fa-user"></i>
+                            <span>Full Name</span>
+                          </label>
+                          <div class="input-wrapper">
+                            <input
+                              type="text"
+                              class="form-control-enhanced"
+                              id="fullName"
+                              placeholder="John Doe"
+                              required
+                            />
+                            <div class="input-underline"></div>
+                          </div>
+                          <span class="error-message" id="nameError"></span>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group-enhanced">
+                          <label class="form-label-enhanced" for="phoneNumber">
+                            <i class="fas fa-phone"></i>
+                            <span>Phone Number</span>
+                          </label>
+                          <div class="input-wrapper">
+                            <input
+                              type="tel"
+                              class="form-control-enhanced"
+                              id="phoneNumber"
+                              placeholder="1234567890"
+                              maxlength="10"
+                              required
+                            />
+                            <div class="input-underline"></div>
+                          </div>
+                          <small class="form-hint">10 digits only</small>
+                          <span class="error-message" id="phoneError"></span>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group-enhanced">
+                          <label class="form-label-enhanced" for="pinCode">
+                            <i class="fas fa-lock"></i>
+                            <span>PIN Code</span>
+                          </label>
+                          <div class="input-wrapper">
+                            <input
+                              type="text"
+                              class="form-control-enhanced"
+                              id="pinCode"
+                              placeholder="123456"
+                              maxlength="6"
+                              required
+                            />
+                            <div class="input-underline"></div>
+                          </div>
+                          <small class="form-hint">6 digits only</small>
+                          <span class="error-message" id="pinError"></span>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group-enhanced">
+                          <label class="form-label-enhanced" for="email">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email Address</span>
+                          </label>
+                          <div class="input-wrapper">
+                            <input
+                              type="email"
+                              class="form-control-enhanced"
+                              id="email"
+                              placeholder="john.doe@example.com"
+                              required
+                            />
+                            <div class="input-underline"></div>
+                          </div>
+                          <span class="error-message" id="emailError"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-footer">
+                      <button
+                        type="submit"
+                        class="btn-primary btn-submit-enhanced w-100"
+                      >
+                        <span>Create Account</span>
+                        <i class="fas fa-arrow-right"></i>
+                      </button>
+                      <p class="form-terms">
+                        By creating an account, you agree to our
+                        <a href="#">Terms of Service</a> and
+                        <a href="#">Privacy Policy</a>
+                      </p>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+      <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="text-center">
+          <i
+            class="fas fa-check-circle"
+            style="font-size: 64px; color: #00bcd4; margin-bottom: 20px"
+          ></i>
+          <h2>Registration Successful!</h2>
+          <p class="mb-4">Welcome to VoyageFlow. Let's start your journey!</p>
+          <button id="modalCloseBtn" class="btn-primary btn-continue">
+            Continue to Destinations
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5>VoyageFlow</h5>
+            <p>
+              Your trusted partner for planning amazing travel experiences
+              around the world.
+            </p>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h5>Quick Links</h5>
+            <ul class="navbar-nav footer-nav">
+              <li>
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li>
+                <a class="nav-link" href="destinations.html">Destinations</a>
+              </li>
+              <li>
+                <a class="nav-link" href="registration.html">Get Started</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h5>Contact</h5>
+            <p><i class="fas fa-envelope"></i> info@voyageflow.com</p>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025VoyageFlow. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Utility Functions -->
+    <script src="js/utils.js"></script>
+
+    <!-- Navigation -->
+    <script src="js/navigation.js"></script>
+
+    <!-- Page Scripts -->
+    <script src="js/pages/registration.js"></script>
+
+    <!-- Update registration.js to redirect to destinations.html -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        updateProgressBarAuto();
+        
+        // Override the modal close button to redirect to destinations
+        const modalCloseBtn = document.getElementById("modalCloseBtn");
+        if (modalCloseBtn) {
+          modalCloseBtn.addEventListener("click", () => {
+            window.location.href = "destinations.html";
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
+

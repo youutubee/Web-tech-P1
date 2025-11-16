@@ -110,8 +110,8 @@ function initRegistrationPage() {
     if (modalCloseBtn) {
         modalCloseBtn.addEventListener('click', () => {
             hideModal('successModal');
-            showPage('page2');
-            updateProgressBar(2, 5);
+            // Redirect to destinations page
+            window.location.href = 'destinations.html';
         });
     }
 

@@ -591,16 +591,382 @@ html, body {
     color: #856404;
 }
 
-/* Registration Card */
-.registration-card {
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    border: none;
+/* Registration Hero Section */
+.registration-hero {
+    position: relative;
+    min-height: 300px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+    overflow: hidden;
 }
 
-.registration-card .form-label i {
-    margin-right: 8px;
+.registration-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.85), rgba(0, 172, 193, 0.85));
+    z-index: 1;
+}
+
+.registration-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+    z-index: 1;
+}
+
+.registration-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #ffffff;
+    padding: 60px 20px;
+}
+
+.registration-hero-content h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #ffffff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.8s ease;
+}
+
+.registration-hero-content p {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+/* Registration Section */
+.registration-section {
+    background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+    padding: 60px 0;
+    position: relative;
+}
+
+.registration-card-wrapper {
+    position: relative;
+    margin-top: -80px;
+    z-index: 10;
+}
+
+/* Enhanced Registration Card */
+.registration-card {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.registration-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+}
+
+.registration-card-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 40px 30px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.registration-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.registration-icon-wrapper i {
+    font-size: 36px;
+    color: #ffffff;
+}
+
+.registration-card-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.registration-card-header p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+/* Enhanced Form Styles */
+.registration-form {
+    margin-top: 20px;
+}
+
+.form-group-enhanced {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.form-label-enhanced {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-label-enhanced i {
     color: var(--primary-color);
+    font-size: 16px;
     width: 20px;
+    text-align: center;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.form-control-enhanced {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: var(--font-family);
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    color: var(--text-color);
+}
+
+.form-control-enhanced:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-control-enhanced::placeholder {
+    color: #999;
+    opacity: 0.7;
+}
+
+.input-underline {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transition: width 0.3s ease;
+    border-radius: 2px;
+}
+
+.form-control-enhanced:focus + .input-underline {
+    width: 100%;
+}
+
+.form-hint {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+}
+
+.form-footer {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.btn-submit-enhanced {
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-submit-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-submit-enhanced:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-submit-enhanced:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 188, 212, 0.4);
+}
+
+.btn-submit-enhanced i {
+    transition: transform 0.3s ease;
+}
+
+.btn-submit-enhanced:hover i {
+    transform: translateX(5px);
+}
+
+.form-terms {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #666;
+}
+
+.form-terms a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.form-terms a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* Error Message Enhancement */
+.error-message {
+    display: none;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #e53935;
+    font-weight: 500;
+    padding-left: 24px;
+    position: relative;
+    animation: slideDown 0.3s ease;
+}
+
+.error-message.show {
+    display: block;
+}
+
+.error-message::before {
+    content: '⚠';
+    position: absolute;
+    left: 0;
+    font-size: 14px;
+}
+
+.form-control-enhanced.error {
+    border-color: #e53935;
+    background-color: #fff5f5;
+    animation: shake 0.4s;
+}
+
+.form-control-enhanced.error + .input-underline {
+    background: linear-gradient(90deg, #e53935, #c62828);
+    width: 100%;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* Responsive Design for Registration */
+@media (max-width: 768px) {
+    .registration-hero-content h1 {
+        font-size: 36px;
+    }
+    
+    .registration-hero-content p {
+        font-size: 18px;
+    }
+    
+    .registration-card-wrapper {
+        margin-top: -60px;
+    }
+    
+    .registration-card-header {
+        padding: 30px 20px;
+    }
+    
+    .registration-card-header h2 {
+        font-size: 24px;
+    }
+    
+    .registration-icon-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .registration-icon-wrapper i {
+        font-size: 28px;
+    }
+    
+    .form-control-enhanced {
+        padding: 14px 16px;
+    }
 }
 
 /* Responsive */

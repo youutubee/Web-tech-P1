@@ -9,7 +9,7 @@ function initDestinationSelection() {
     setTimeout(() => {
         const destinationCards = document.querySelectorAll('.destination-card');
         const selectButtons = document.querySelectorAll('.btn-select-destination');
-        const nextBtn = document.getElementById('nextToPage3');
+        const nextBtn = document.getElementById('nextToPage3') || document.getElementById('nextToBooking');
 
         // Handle select button clicks
         selectButtons.forEach(button => {
@@ -40,6 +40,7 @@ function initDestinationSelection() {
                 
                 // Store selected destination
                 storeData('selectedDestination', selectedDestination);
+                localStorage.setItem('selectedDestination', selectedDestination);
                 
                 // Enable next button
                 if (nextBtn) {
@@ -67,14 +68,9 @@ function initDestinationSelection() {
         if (nextBtn) {
             nextBtn.addEventListener('click', () => {
                 if (selectedDestination) {
-                    showPage('page3');
-                    updateProgressBar(4, 5);
-                    // Initialize calculator with selected destination
-                    setTimeout(() => {
-                        if (typeof initCalculatorPage === 'function') {
-                            initCalculatorPage();
-                        }
-                    }, 100);
+                    // Store selected destination and redirect to booking page
+                    localStorage.setItem('selectedDestination', selectedDestination);
+                    window.location.href = `booking.html?destination=${selectedDestination}`;
                 }
             });
         }
@@ -88,23 +84,8 @@ if (document.readyState === 'loading') {
     initDestinationSelection();
 }
 
-// Re-initialize when page becomes active
-const page2bObserver = new MutationObserver(() => {
-    const page2b = document.getElementById('page2b');
-    if (page2b && page2b.classList.contains('active')) {
-        setTimeout(initDestinationSelection, 100);
-    }
-});
-
-const page2b = document.getElementById('page2b');
-if (page2b) {
-    page2bObserver.observe(page2b, { attributes: true, attributeFilter: ['class'] });
-}
-
-// Also initialize on page show
-document.addEventListener('click', (e) => {
-    if (e.target.closest('#page2b') || e.target.closest('[onclick*="page2b"]')) {
-        setTimeout(initDestinationSelection, 200);
-    }
+// Re-initialize when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initDestinationSelection, 200);
 });
 

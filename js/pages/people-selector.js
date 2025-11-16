@@ -2,90 +2,174 @@
 // People Selector Logic
 // ============================================
 
-let numPeople = 1;
+let numAdults = 1;
+let numChildren = 0;
+let numInfants = 0;
 let selectedTickets = 0;
 const MAX_TICKETS = 4;
 
 function initPeopleSelector() {
+    // Handle both old and new structure
     const numPeopleInput = document.getElementById('numPeople');
-    const decreaseBtn = document.querySelector('.btn-people-decrease');
-    const increaseBtn = document.querySelector('.btn-people-increase');
+    const numAdultsInput = document.getElementById('numAdults');
+    const numChildrenInput = document.getElementById('numChildren');
+    const numInfantsInput = document.getElementById('numInfants');
+    
+    const decreaseBtns = document.querySelectorAll('.btn-people-decrease');
+    const increaseBtns = document.querySelectorAll('.btn-people-increase');
     const peopleWarning = document.getElementById('peopleWarning');
-    const ticketChecker = document.getElementById('ticketChecker');
+    const totalTravelersSpan = document.getElementById('totalTravelers');
 
-    if (!numPeopleInput) return;
-
-    // Set initial value
-    numPeople = parseInt(numPeopleInput.value) || 1;
-    storeData('numPeople', numPeople);
-
-    // Decrease button
-    if (decreaseBtn) {
-        decreaseBtn.addEventListener('click', () => {
-            if (numPeople > 1) {
-                numPeople--;
-                updatePeopleSelector();
-            }
-        });
+    // Initialize with new structure (adults, children, infants)
+    if (numAdultsInput) {
+        numAdults = parseInt(numAdultsInput.value) || 1;
+    } else if (numPeopleInput) {
+        numAdults = parseInt(numPeopleInput.value) || 1;
     }
 
-    // Increase button
-    if (increaseBtn) {
-        increaseBtn.addEventListener('click', () => {
-            if (numPeople < 10) {
-                numPeople++;
-                updatePeopleSelector();
-            }
-        });
+    if (numChildrenInput) {
+        numChildren = parseInt(numChildrenInput.value) || 0;
     }
 
-    // Update when input changes
-    numPeopleInput.addEventListener('change', () => {
-        const value = parseInt(numPeopleInput.value);
-        if (value >= 1 && value <= 10) {
-            numPeople = value;
-            updatePeopleSelector();
-        } else {
-            numPeopleInput.value = numPeople;
-        }
+    if (numInfantsInput) {
+        numInfants = parseInt(numInfantsInput.value) || 0;
+    }
+
+    updateTotalTravelers();
+
+    // Handle decrease buttons
+    decreaseBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-target');
+            if (target === 'numAdults' && numAdults > 1) {
+                numAdults--;
+                if (numAdultsInput) numAdultsInput.value = numAdults;
+                updateTotalTravelers();
+            } else if (target === 'numChildren' && numChildren > 0) {
+                numChildren--;
+                if (numChildrenInput) numChildrenInput.value = numChildren;
+                updateTotalTravelers();
+            } else if (target === 'numInfants' && numInfants > 0) {
+                numInfants--;
+                if (numInfantsInput) numInfantsInput.value = numInfants;
+                updateTotalTravelers();
+            } else if (!target && numAdults > 1) {
+                // Old structure
+                numAdults--;
+                if (numPeopleInput) numPeopleInput.value = numAdults;
+                updateTotalTravelers();
+            }
+        });
     });
 
-    function updatePeopleSelector() {
-        numPeopleInput.value = numPeople;
-        storeData('numPeople', numPeople);
-
-        // Update decrease button
-        if (decreaseBtn) {
-            decreaseBtn.disabled = numPeople <= 1;
-        }
-
-        // Show warning for 6+ people
-        if (peopleWarning) {
-            if (numPeople > 6) {
-                peopleWarning.classList.remove('d-none');
-            } else {
-                peopleWarning.classList.add('d-none');
+    // Handle increase buttons
+    increaseBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-target');
+            if (target === 'numAdults' && numAdults < 10) {
+                numAdults++;
+                if (numAdultsInput) numAdultsInput.value = numAdults;
+                updateTotalTravelers();
+            } else if (target === 'numChildren' && numChildren < 10) {
+                numChildren++;
+                if (numChildrenInput) numChildrenInput.value = numChildren;
+                updateTotalTravelers();
+            } else if (target === 'numInfants' && numInfants < 5) {
+                numInfants++;
+                if (numInfantsInput) numInfantsInput.value = numInfants;
+                updateTotalTravelers();
+            } else if (!target && numAdults < 10) {
+                // Old structure
+                numAdults++;
+                if (numPeopleInput) numPeopleInput.value = numAdults;
+                updateTotalTravelers();
             }
-        }
+        });
+    });
 
-        // Disable customization for 6+ people
-        if (numPeople > 6) {
-            disableCustomization();
-        } else {
-            enableCustomization();
+    // Set minimum date to today
+    const tripDateInput = document.getElementById('tripDate');
+    if (tripDateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        tripDateInput.setAttribute('min', today);
+        if (!tripDateInput.value) {
+            tripDateInput.value = today;
         }
+    }
 
-        // Update ticket checker
-        updateTicketChecker();
+    // Update when inputs change
+    if (numAdultsInput) {
+        numAdultsInput.addEventListener('change', () => {
+            numAdults = Math.max(1, Math.min(10, parseInt(numAdultsInput.value) || 1));
+            numAdultsInput.value = numAdults;
+            updateTotalTravelers();
+        });
+    }
 
-        // Recalculate total
-        if (typeof calculateTotal === 'function') {
-            calculateTotal();
-        }
+    if (numChildrenInput) {
+        numChildrenInput.addEventListener('change', () => {
+            numChildren = Math.max(0, Math.min(10, parseInt(numChildrenInput.value) || 0));
+            numChildrenInput.value = numChildren;
+            updateTotalTravelers();
+        });
+    }
+
+    if (numInfantsInput) {
+        numInfantsInput.addEventListener('change', () => {
+            numInfants = Math.max(0, Math.min(5, parseInt(numInfantsInput.value) || 0));
+            numInfantsInput.value = numInfants;
+            updateTotalTravelers();
+        });
     }
 
     // Initial update
     updatePeopleSelector();
+}
+
+function updateTotalTravelers() {
+    const totalTravelers = numAdults + numChildren; // Infants don't count for pricing
+    const totalTravelersSpan = document.getElementById('totalTravelers');
+    if (totalTravelersSpan) {
+        totalTravelersSpan.textContent = totalTravelers;
+    }
+    
+    // Store in localStorage and sessionStorage
+    storeData('numPeople', totalTravelers);
+    storeData('numAdults', numAdults);
+    storeData('numChildren', numChildren);
+    storeData('numInfants', numInfants);
+    localStorage.setItem('numPeople', totalTravelers);
+    localStorage.setItem('numAdults', numAdults);
+    localStorage.setItem('numChildren', numChildren);
+    localStorage.setItem('numInfants', numInfants);
+    
+    updatePeopleSelector();
+}
+
+function updatePeopleSelector() {
+    const totalTravelers = numAdults + numChildren;
+    const peopleWarning = document.getElementById('peopleWarning');
+
+    // Show warning for 6+ people
+    if (peopleWarning) {
+        if (totalTravelers >= 6) {
+            peopleWarning.classList.remove('d-none');
+        } else {
+            peopleWarning.classList.add('d-none');
+        }
+    }
+
+    // Disable customization for 6+ people
+    if (totalTravelers >= 6) {
+        disableCustomization();
+    } else {
+        enableCustomization();
+    }
+
+    // Recalculate total
+    if (typeof calculateTotal === 'function') {
+        calculateTotal();
+    }
 }
 
 function disableCustomization() {
@@ -98,18 +182,6 @@ function disableCustomization() {
             checkbox.closest('label')?.classList.add('disabled');
         }
     });
-
-    // Show message
-    const ticketChecker = document.getElementById('ticketChecker');
-    if (ticketChecker) {
-        ticketChecker.innerHTML = `
-            <small class="text-warning">
-                <i class="fas fa-exclamation-triangle"></i> 
-                For groups of 6+ people, only flight tickets can be selected. Please contact us for accommodation and other services.
-            </small>
-        `;
-        ticketChecker.classList.add('warning');
-    }
 }
 
 function enableCustomization() {
@@ -118,103 +190,6 @@ function enableCustomization() {
     allCheckboxes.forEach(checkbox => {
         checkbox.disabled = false;
         checkbox.closest('label')?.classList.remove('disabled');
-    });
-
-    // Update ticket checker
-    updateTicketChecker();
-}
-
-function updateTicketChecker() {
-    const ticketChecker = document.getElementById('ticketChecker');
-    if (!ticketChecker) return;
-
-    // Count selected flight tickets
-    const travelCheckboxes = document.querySelectorAll('.custom-checkbox[data-category="travel"]:checked');
-    selectedTickets = travelCheckboxes.length;
-
-    if (numPeople === 1) {
-        // If only 1 person, only 1 ticket should be selected
-        if (selectedTickets > 1) {
-            ticketChecker.innerHTML = `
-                <small class="text-danger">
-                    <i class="fas fa-times-circle"></i> 
-                    Only 1 flight ticket can be selected for 1 person. Please unselect other tickets.
-                </small>
-            `;
-            ticketChecker.classList.remove('warning');
-            ticketChecker.classList.add('error');
-        } else {
-            ticketChecker.innerHTML = `
-                <small class="text-muted">
-                    <i class="fas fa-info-circle"></i> 
-                    Select 1 flight ticket for 1 person
-                </small>
-            `;
-            ticketChecker.classList.remove('warning', 'error');
-        }
-    } else if (selectedTickets > MAX_TICKETS) {
-        ticketChecker.innerHTML = `
-            <small class="text-danger">
-                <i class="fas fa-times-circle"></i> 
-                Maximum ${MAX_TICKETS} flight tickets allowed. You have selected ${selectedTickets}. Please unselect ${selectedTickets - MAX_TICKETS} ticket(s).
-            </small>
-        `;
-        ticketChecker.classList.remove('warning');
-        ticketChecker.classList.add('error');
-    } else if (selectedTickets > numPeople) {
-        ticketChecker.innerHTML = `
-            <small class="text-warning">
-                <i class="fas fa-exclamation-triangle"></i> 
-                You have selected ${selectedTickets} tickets for ${numPeople} people. Consider selecting ${numPeople} tickets.
-            </small>
-        `;
-        ticketChecker.classList.add('warning');
-        ticketChecker.classList.remove('error');
-    } else {
-        ticketChecker.innerHTML = `
-            <small class="text-muted">
-                <i class="fas fa-info-circle"></i> 
-                Selected ${selectedTickets} ticket(s) for ${numPeople} people. Maximum ${MAX_TICKETS} tickets allowed.
-            </small>
-        `;
-        ticketChecker.classList.remove('warning', 'error');
-    }
-}
-
-// Monitor ticket selections
-function monitorTicketSelections() {
-    const travelCheckboxes = document.querySelectorAll('.custom-checkbox[data-category="travel"]');
-    travelCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            updateTicketChecker();
-            
-            // If only 1 person and more than 1 ticket selected, uncheck others
-            if (numPeople === 1) {
-                const checkedTickets = document.querySelectorAll('.custom-checkbox[data-category="travel"]:checked');
-                if (checkedTickets.length > 1) {
-                    // Keep only the last checked one
-                    checkedTickets.forEach((ticket, index) => {
-                        if (index < checkedTickets.length - 1) {
-                            ticket.checked = false;
-                        }
-                    });
-                }
-            }
-            
-            // If more than MAX_TICKETS selected, uncheck the last ones
-            const checkedTickets = document.querySelectorAll('.custom-checkbox[data-category="travel"]:checked');
-            if (checkedTickets.length > MAX_TICKETS) {
-                checkedTickets.forEach((ticket, index) => {
-                    if (index >= MAX_TICKETS) {
-                        ticket.checked = false;
-                    }
-                });
-            }
-            
-            if (typeof calculateTotal === 'function') {
-                calculateTotal();
-            }
-        });
     });
 }
 
@@ -229,19 +204,36 @@ if (document.readyState === 'loading') {
     setTimeout(monitorTicketSelections, 500);
 }
 
-// Re-initialize when page3 becomes active
-const page3Observer = new MutationObserver(() => {
-    const page3 = document.getElementById('page3');
-    if (page3 && page3.classList.contains('active')) {
-        setTimeout(() => {
-            initPeopleSelector();
-            monitorTicketSelections();
-        }, 100);
-    }
-});
-
-const page3 = document.getElementById('page3');
-if (page3) {
-    page3Observer.observe(page3, { attributes: true, attributeFilter: ['class'] });
+// Monitor ticket selections
+function monitorTicketSelections() {
+    const travelCheckboxes = document.querySelectorAll('.custom-checkbox[data-category="travel"]');
+    travelCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const totalTravelers = numAdults + numChildren;
+            const checkedTickets = document.querySelectorAll('.custom-checkbox[data-category="travel"]:checked');
+            selectedTickets = checkedTickets.length;
+            
+            // If more tickets than travelers, uncheck extras
+            if (selectedTickets > totalTravelers) {
+                checkedTickets.forEach((ticket, index) => {
+                    if (index >= totalTravelers) {
+                        ticket.checked = false;
+                    }
+                });
+            }
+            
+            // If more than MAX_TICKETS, uncheck extras
+            if (selectedTickets > MAX_TICKETS) {
+                checkedTickets.forEach((ticket, index) => {
+                    if (index >= MAX_TICKETS) {
+                        ticket.checked = false;
+                    }
+                });
+            }
+            
+            if (typeof calculateTotal === 'function') {
+                calculateTotal();
+            }
+        });
+    });
 }
-

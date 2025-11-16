@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You — VoyageFlow</title>
+
+    <!-- Bootstrap 5.2.0 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div id="progressBar" class="progress-bar" style="width: 100%"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-wrapper">
+          <a class="navbar-brand" href="index.html">
+            <i class="fas fa-plane"></i> VoyageFlow
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul class="navbar-nav">
+            <li>
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-dropdown">
+              <a
+                class="nav-dropdown-toggle"
+                href="javascript:void(0)"
+                aria-expanded="false"
+              >
+                Destinations <i class="fas fa-chevron-down"></i>
+              </a>
+              <div class="nav-dropdown-menu">
+                <a class="nav-dropdown-item" href="destinations.html"
+                  >Browse All</a
+                >
+              </div>
+            </li>
+            <li>
+              <a class="nav-link" href="login.html">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Thank You Section -->
+    <section class="section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8 col-lg-6">
+            <div class="card">
+              <div class="card-body p-5 text-center">
+                <i
+                  class="fas fa-plane"
+                  style="font-size: 80px; color: #00bcd4; margin-bottom: 30px"
+                ></i>
+                <h1>Thank You, <span id="summaryName">Traveler</span>!</h1>
+
+                <div class="card mt-4 mb-4" style="background-color: #f5f5f5">
+                  <div class="card-body">
+                    <h3 class="mb-3">Your Booking Summary</h3>
+                    <div class="d-flex justify-content-between mb-2">
+                      <span><strong>Destination:</strong></span>
+                      <span id="summaryDestination" class="text-primary"
+                        >Selected</span
+                      >
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <span><strong>Total Price:</strong></span>
+                      <span id="summaryPrice" class="text-primary">-</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span><strong>Travelers:</strong></span>
+                      <span id="summaryTravelers" class="text-primary">-</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="mb-4">
+                  Your travel experience has been successfully booked. We
+                  hope you enjoyed your journey through VoyageFlow!
+                </p>
+
+                <button
+                  id="startOverBtn"
+                  class="btn-secondary btn-start-over mb-4"
+                >
+                  <i class="fas fa-redo"></i> Start Over
+                </button>
+
+                <div class="social-icons justify-content-center">
+                  <a href="#"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+                  <a href="#"><i class="fab fa-instagram"></i></a>
+                  <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5>VoyageFlow</h5>
+            <p>
+              Your trusted partner for planning amazing travel experiences
+              around the world.
+            </p>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h5>Quick Links</h5>
+            <ul class="navbar-nav footer-nav">
+              <li>
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li>
+                <a class="nav-link" href="destinations.html">Destinations</a>
+              </li>
+              <li>
+                <a class="nav-link" href="login.html">Login</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h5>Contact</h5>
+            <p><i class="fas fa-envelope"></i> info@voyageflow.com</p>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025VoyageFlow. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Destination Data -->
+    <script src="data/destinations.js"></script>
+
+    <!-- Utility Functions -->
+    <script src="js/utils.js"></script>
+
+    <!-- Navigation -->
+    <script src="js/navigation.js"></script>
+
+    <!-- Page Scripts -->
+    <script src="js/pages/thankyou.js"></script>
+
+    <!-- Initialize Thank You Page -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        updateProgressBarAuto();
+
+        // Display summary
+        function displaySummary() {
+          const userData = JSON.parse(localStorage.getItem("userData") || "{}");
+          const bookingData = JSON.parse(localStorage.getItem("bookingData") || "{}");
+          const selectedDestination = localStorage.getItem("selectedDestination");
+
+          if (userData.fullName) {
+            document.getElementById("summaryName").textContent = userData.fullName;
+          }
+
+          if (selectedDestination && window.destinationsData) {
+            const dest = window.destinationsData[selectedDestination];
+            if (dest) {
+              document.getElementById("summaryDestination").textContent = dest.name;
+            }
+          }
+
+          if (bookingData.totalPrice) {
+            document.getElementById("summaryPrice").textContent = formatCurrency(bookingData.totalPrice);
+          }
+
+          if (bookingData.numPeople) {
+            document.getElementById("summaryTravelers").textContent = bookingData.numPeople;
+          }
+        }
+
+        // Wait for destinationsData to load
+        if (typeof destinationsData !== "undefined") {
+          window.destinationsData = destinationsData;
+          displaySummary();
+        } else {
+          setTimeout(() => {
+            if (typeof destinationsData !== "undefined") {
+              window.destinationsData = destinationsData;
+              displaySummary();
+            }
+          }, 100);
+        }
+
+        // Start over button
+        const startOverBtn = document.getElementById("startOverBtn");
+        if (startOverBtn) {
+          startOverBtn.addEventListener("click", () => {
+            localStorage.clear();
+            window.location.href = "index.html";
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
+
