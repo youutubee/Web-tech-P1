@@ -89,9 +89,22 @@ if (document.readyState === 'loading') {
 }
 
 // Re-initialize when page becomes active
-document.addEventListener('click', (e) => {
-    if (e.target.closest('#page2b')) {
+const page2bObserver = new MutationObserver(() => {
+    const page2b = document.getElementById('page2b');
+    if (page2b && page2b.classList.contains('active')) {
         setTimeout(initDestinationSelection, 100);
+    }
+});
+
+const page2b = document.getElementById('page2b');
+if (page2b) {
+    page2bObserver.observe(page2b, { attributes: true, attributeFilter: ['class'] });
+}
+
+// Also initialize on page show
+document.addEventListener('click', (e) => {
+    if (e.target.closest('#page2b') || e.target.closest('[onclick*="page2b"]')) {
+        setTimeout(initDestinationSelection, 200);
     }
 });
 

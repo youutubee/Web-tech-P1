@@ -41,9 +41,18 @@ function showPage(pageId) {
     const targetPage = document.getElementById(pageId);
     if (targetPage) {
         targetPage.classList.add('active');
-        window.scrollTo(0, 0);
+        // Scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Also ensure body can scroll
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
         // Update progress bar
         updateProgressBarAuto();
+        
+        // Re-initialize destination selection if needed
+        if (pageId === 'page2b' && typeof initDestinationSelection === 'function') {
+            setTimeout(initDestinationSelection, 200);
+        }
     }
 }
 

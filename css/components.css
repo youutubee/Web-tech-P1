@@ -297,10 +297,25 @@
     display: none;
     animation: fadeIn 0.5s ease;
     min-height: calc(100vh - 60px);
+    overflow-y: visible;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
 }
 
 .page.active {
     display: block;
+}
+
+/* Ensure page content can scroll */
+.page.active {
+    overflow-y: visible;
+}
+
+html, body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
 }
 
 @keyframes fadeIn {

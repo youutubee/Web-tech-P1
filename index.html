@@ -677,6 +677,24 @@
         if (page3) {
             page3Observer.observe(page3, { attributes: true, attributeFilter: ['class'] });
         }
+        
+        // Re-populate destination cards when page2b becomes active
+        const page2bObserver = new MutationObserver(() => {
+            const page2b = document.getElementById('page2b');
+            if (page2b && page2b.classList.contains('active')) {
+                setTimeout(() => {
+                    populateDestinationCards();
+                    if (typeof initDestinationSelection === 'function') {
+                        initDestinationSelection();
+                    }
+                }, 100);
+            }
+        });
+        
+        const page2b = document.getElementById('page2b');
+        if (page2b) {
+            page2bObserver.observe(page2b, { attributes: true, attributeFilter: ['class'] });
+        }
     </script>
 </body>
 </html>
