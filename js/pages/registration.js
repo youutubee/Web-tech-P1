@@ -3,18 +3,23 @@
 // ============================================
 
 function initRegistrationPage() {
-    const form = document.getElementById('registrationForm');
+    // Try both form IDs (login and registration)
+    const form = document.getElementById('registrationForm') || document.getElementById('registrationFormReg');
     if (!form) return;
 
-    const fullNameInput = document.getElementById('fullName');
-    const phoneInput = document.getElementById('phoneNumber');
-    const pinInput = document.getElementById('pinCode');
-    const emailInput = document.getElementById('email');
+    // Get form ID to determine which input IDs to use
+    const formId = form.id;
+    const isRegistration = formId === 'registrationFormReg';
     
-    const nameError = document.getElementById('nameError');
-    const phoneError = document.getElementById('phoneError');
-    const pinError = document.getElementById('pinError');
-    const emailError = document.getElementById('emailError');
+    const fullNameInput = document.getElementById(isRegistration ? 'fullNameReg' : 'fullName');
+    const phoneInput = document.getElementById(isRegistration ? 'phoneNumberReg' : 'phoneNumber');
+    const pinInput = document.getElementById(isRegistration ? 'pinCodeReg' : 'pinCode');
+    const emailInput = document.getElementById(isRegistration ? 'emailReg' : 'email');
+    
+    const nameError = document.getElementById(isRegistration ? 'nameErrorReg' : 'nameError');
+    const phoneError = document.getElementById(isRegistration ? 'phoneErrorReg' : 'phoneError');
+    const pinError = document.getElementById(isRegistration ? 'pinErrorReg' : 'pinError');
+    const emailError = document.getElementById(isRegistration ? 'emailErrorReg' : 'emailError');
 
     // Real-time validation
     if (fullNameInput && nameError) {
@@ -93,29 +98,49 @@ function initRegistrationPage() {
         if (isValid) {
             // Store user data
             const userData = {
-                name: fullNameInput?.value || '',
+                fullName: fullNameInput?.value || '',
                 phone: phoneInput?.value || '',
                 email: emailInput?.value || '',
                 pin: pinInput?.value || ''
             };
+            localStorage.setItem('userData', JSON.stringify(userData));
             storeData('userData', userData);
             
-            // Show success modal
-            showModal('successModal');
+            // Show success modal (different modals for login vs registration)
+            const modalId = isRegistration ? 'successModalReg' : 'successModal';
+            showModal(modalId);
         }
     });
 
-    // Modal close button
+    // Modal close button (for login)
     const modalCloseBtn = document.getElementById('modalCloseBtn');
     if (modalCloseBtn) {
         modalCloseBtn.addEventListener('click', () => {
             hideModal('successModal');
             // Redirect to destinations page
-            window.location.href = 'destinations.html';
+            window.location.hash = 'destinations';
+            if (typeof showPage === 'function') {
+                showPage('destinations');
+            }
         });
     }
 
+    // Modal close button (for registration)
+    const modalCloseBtnReg = document.getElementById('modalCloseBtnReg');
+    if (modalCloseBtnReg) {
+        modalCloseBtnReg.addEventListener('click', () => {
+            hideModal('successModalReg');
+            // Redirect to destinations page
+            window.location.hash = 'destinations';
+            if (typeof showPage === 'function') {
+                showPage('destinations');
+            }
+        });
+    }
+
+    // Setup modals
     setupModalClose('successModal');
+    setupModalClose('successModalReg');
 }
 
 // Initialize when page loads

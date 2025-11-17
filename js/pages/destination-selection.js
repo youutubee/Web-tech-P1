@@ -70,7 +70,10 @@ function initDestinationSelection() {
                 if (selectedDestination) {
                     // Store selected destination and redirect to booking page
                     localStorage.setItem('selectedDestination', selectedDestination);
-                    window.location.href = `booking.html?destination=${selectedDestination}`;
+                    window.location.hash = `booking?destination=${selectedDestination}`;
+                    if (typeof showPage === 'function') {
+                        showPage('booking');
+                    }
                 }
             });
         }

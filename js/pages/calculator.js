@@ -12,11 +12,15 @@ let selectedItems = {
 function initCalculatorPage() {
     // Load destination data from URL parameter or localStorage
     const urlParams = new URLSearchParams(window.location.search);
-    const selectedDestination = urlParams.get('destination') || getData('selectedDestination') || localStorage.getItem('selectedDestination');
+    const hashParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
+    const selectedDestination = urlParams.get('destination') || hashParams.get('destination') || getData('selectedDestination') || localStorage.getItem('selectedDestination');
     if (!selectedDestination) {
         console.error('No destination selected');
         // Redirect to destinations page if no destination selected
-        window.location.href = 'destinations.html';
+        window.location.hash = 'destinations';
+        if (typeof showPage === 'function') {
+            showPage('destinations');
+        }
         return;
     }
 
@@ -102,7 +106,10 @@ function initCalculatorPage() {
                 tripDuration: tripDuration
             };
             localStorage.setItem('bookingData', JSON.stringify(bookingData));
-            window.location.href = 'thankyou.html';
+            window.location.hash = 'thankyou';
+            if (typeof showPage === 'function') {
+                showPage('thankyou');
+            }
         });
     }
 
