@@ -989,105 +989,375 @@
         window.addEventListener('hashchange', () => {
           const hash = window.location.hash.replace('#', '') || 'home';
           showPage(hash);
+          // Re-initialize page-specific functionality
+          initializePage(hash);
         });
-
-        // Initialize carousel for home page
-        if (hash === 'home') {
-          updateProgressBarAuto();
-          const carousel = new Carousel("heroCarousel", {
-            autoplay: true,
-            interval: 5000,
-          });
-        }
-
-        // Initialize destinations page
-        if (hash === 'destinations') {
-          updateProgressBarAuto();
-          // Make destinationsData globally available
-          window.destinationsData = typeof destinationsData !== "undefined" ? destinationsData : {};
-          
-          // Populate destination cards
-          function populateDestinationCards() {
-            const grid = document.getElementById("destinationGrid");
-            if (grid && window.destinationsData && Object.keys(window.destinationsData).length > 0) {
-              grid.innerHTML = "";
-              Object.keys(window.destinationsData).forEach((key) => {
-                const dest = window.destinationsData[key];
-                const col = document.createElement("div");
-                col.className = "col-md-4";
-                col.innerHTML = `
-                  <div class="destination-card" data-destination="${key}">
-                    <img src="${dest.image}" class="destination-card-img" alt="${dest.name}">
-                    <div class="destination-card-body">
-                      <h3 class="destination-card-title">${dest.name}</h3>
-                      <p class="destination-card-text">${dest.description}</p>
-                      <div class="destination-card-footer">
-                        <span class="destination-price">From ${formatCurrency(dest.basePrice)}</span>
-                        <span class="destination-rating">⭐ 4.8</span>
-                      </div>
-                      <button class="btn-select-destination btn-primary btn-sm" data-destination="${key}">
-                        <i class="fas fa-check"></i> Select
-                      </button>
-                    </div>
-                  </div>
-                `;
-                grid.appendChild(col);
-              });
-            }
-          }
-
-          setTimeout(() => {
-            if (typeof destinationsData !== "undefined") {
-              window.destinationsData = destinationsData;
-              populateDestinationCards();
+        
+        // Function to initialize page-specific functionality
+        function initializePage(hash) {
+          // Initialize booking page
+          if (hash.startsWith('booking')) {
+            updateProgressBarAuto();
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(hash.split('?')[1] || '');
+            const destinationKey = urlParams.get("destination") || hashParams.get("destination") || localStorage.getItem("selectedDestination");
+            
+            if (destinationKey) {
+              localStorage.setItem("selectedDestination", destinationKey);
+              
+              // Wait for destinationsData to be loaded and page to be visible
+              function initBookingPage() {
+                // Make sure destinationsData is available
+                if (typeof destinationsData !== "undefined") {
+                  window.destinationsData = destinationsData;
+                }
+                
+                // Check if containers exist
+                const accommodationContainer = document.getElementById('accommodationOptions');
+                if (!accommodationContainer) {
+                  console.error('Booking page containers not found, retrying...');
+                  setTimeout(initBookingPage, 200);
+                  return;
+                }
+                
+                // Initialize people selector first
+                if (typeof initPeopleSelector === "function") {
+                  initPeopleSelector();
+                }
+                
+                // Then initialize calculator - wait a bit to ensure page is visible
+                setTimeout(() => {
+                  if (typeof initCalculatorPage === "function") {
+                    console.log('Initializing calculator page...');
+                    initCalculatorPage();
+                  } else {
+                    console.error('initCalculatorPage function not found');
+                  }
+                }, 300);
+              }
+              
+              // Wait a moment for page to be visible, then initialize
               setTimeout(() => {
-                if (typeof initDestinationSelection === "function") {
-                  initDestinationSelection();
+                // Try to initialize immediately if data is available
+                if (typeof destinationsData !== "undefined") {
+                  window.destinationsData = destinationsData;
+                  initBookingPage();
+                } else {
+                  // Wait a bit for destinationsData to load
+                  setTimeout(() => {
+                    if (typeof destinationsData !== "undefined") {
+                      window.destinationsData = destinationsData;
+                      initBookingPage();
+                    } else {
+                      // Try again after another delay
+                      setTimeout(() => {
+                        if (typeof destinationsData !== "undefined") {
+                          window.destinationsData = destinationsData;
+                        }
+                        initBookingPage();
+                      }, 500);
+                    }
+                  }, 200);
                 }
               }, 100);
             }
-          }, 100);
-
-          // Handle continue to booking button
-          const nextBtn = document.getElementById("nextToBooking");
-          if (nextBtn) {
-            nextBtn.addEventListener("click", () => {
+          }
+          
+          // Initialize destinations page
+          if (hash === 'destinations') {
+            updateProgressBarAuto();
+            
+            function initDestinationsPage() {
+              // Make sure destinationsData is available
+              if (typeof destinationsData !== "undefined") {
+                window.destinationsData = destinationsData;
+              }
+              
+              // Check if grid container exists
+              const grid = document.getElementById("destinationGrid");
+              if (!grid) {
+                console.error('Destination grid not found, retrying...');
+                setTimeout(initDestinationsPage, 200);
+                return;
+              }
+              
+              // Populate destination cards
+              function populateDestinationCards() {
+                if (!grid) {
+                  console.error('Grid container not found');
+                  return;
+                }
+                
+                if (!window.destinationsData || Object.keys(window.destinationsData).length === 0) {
+                  console.error('No destinations data available', window.destinationsData);
+                  grid.innerHTML = '<div class="col-12"><p class="text-center text-muted">Loading destinations...</p></div>';
+                  return;
+                }
+                
+                console.log('Populating destination cards:', Object.keys(window.destinationsData));
+                grid.innerHTML = "";
+                
+                // Check if formatCurrency is available
+                const formatPrice = typeof formatCurrency === 'function' ? formatCurrency : (amount) => `$${amount}`;
+                
+                Object.keys(window.destinationsData).forEach((key) => {
+                  const dest = window.destinationsData[key];
+                  if (!dest || !dest.name) {
+                    console.warn('Invalid destination data for key:', key);
+                    return;
+                  }
+                  
+                  const col = document.createElement("div");
+                  col.className = "col-md-4";
+                  col.innerHTML = `
+                    <div class="destination-card" data-destination="${key}">
+                      <img src="${dest.image || ''}" class="destination-card-img" alt="${dest.name}">
+                      <div class="destination-card-body">
+                        <h3 class="destination-card-title">${dest.name}</h3>
+                        <p class="destination-card-text">${dest.description || ''}</p>
+                        <div class="destination-card-footer">
+                          <span class="destination-price">From ${formatPrice(dest.basePrice || 0)}</span>
+                          <span class="destination-rating">⭐ 4.8</span>
+                        </div>
+                        <button class="btn-select-destination btn-primary btn-sm" data-destination="${key}">
+                          <i class="fas fa-check"></i> Select
+                        </button>
+                      </div>
+                    </div>
+                  `;
+                  grid.appendChild(col);
+                });
+                
+                console.log('Destination cards populated:', grid.children.length, 'cards');
+                
+                // Initialize destination selection handlers
+                setTimeout(() => {
+                  if (typeof initDestinationSelection === "function") {
+                    initDestinationSelection();
+                  } else {
+                    console.warn('initDestinationSelection function not found');
+                  }
+                }, 100);
+              }
+              
+              populateDestinationCards();
+              
+              // Handle continue to booking button
+              const nextBtn = document.getElementById("nextToBooking");
+              if (nextBtn) {
+                nextBtn.removeEventListener("click", handleNextToBooking);
+                nextBtn.addEventListener("click", handleNextToBooking);
+              }
+            }
+            
+            function handleNextToBooking() {
               const selectedDestination = localStorage.getItem("selectedDestination");
               if (selectedDestination) {
                 showPage('booking');
                 window.location.hash = 'booking';
               }
-            });
-          }
-        }
-
-        // Initialize booking page
-        if (hash.startsWith('booking')) {
-          updateProgressBarAuto();
-          const urlParams = new URLSearchParams(window.location.search);
-          const hashParams = new URLSearchParams(hash.split('?')[1] || '');
-          const destinationKey = urlParams.get("destination") || hashParams.get("destination") || localStorage.getItem("selectedDestination");
-          
-          if (destinationKey) {
-            localStorage.setItem("selectedDestination", destinationKey);
+            }
+            
+            // Wait a moment for page to be visible, then initialize
             setTimeout(() => {
-              if (typeof initCalculatorPage === "function") {
-                initCalculatorPage();
+              // Check if destinationsData is loaded
+              if (typeof destinationsData !== "undefined" && destinationsData && Object.keys(destinationsData).length > 0) {
+                window.destinationsData = destinationsData;
+                console.log('Destinations data loaded, initializing page');
+                initDestinationsPage();
+              } else {
+                console.log('Waiting for destinations data to load...');
+                // Wait a bit for destinationsData to load
+                setTimeout(() => {
+                  if (typeof destinationsData !== "undefined" && destinationsData && Object.keys(destinationsData).length > 0) {
+                    window.destinationsData = destinationsData;
+                    console.log('Destinations data loaded (retry 1), initializing page');
+                    initDestinationsPage();
+                  } else {
+                    // Try again after another delay
+                    setTimeout(() => {
+                      if (typeof destinationsData !== "undefined" && destinationsData) {
+                        window.destinationsData = destinationsData;
+                        console.log('Destinations data loaded (retry 2), initializing page');
+                      }
+                      initDestinationsPage();
+                    }, 500);
+                  }
+                }, 300);
               }
+            }, 200);
+          }
+          
+          // Initialize home page
+          if (hash === 'home') {
+            updateProgressBarAuto();
+            setTimeout(() => {
+              const carousel = new Carousel("heroCarousel", {
+                autoplay: true,
+                interval: 5000,
+              });
             }, 100);
-          } else {
-            showPage('destinations');
-            window.location.hash = 'destinations';
           }
+          
+          // Initialize thank you page
+          if (hash === 'thankyou') {
+            updateProgressBarAuto();
+            
+            function initThankYouPage() {
+              function displaySummary() {
+                console.log('Displaying summary on thank you page');
+                
+                const userData = JSON.parse(localStorage.getItem("userData") || "{}");
+                const bookingData = JSON.parse(localStorage.getItem("bookingData") || "{}");
+                const selectedDestination = localStorage.getItem("selectedDestination");
+                
+                console.log('User data:', userData);
+                console.log('Booking data:', bookingData);
+                console.log('Selected destination:', selectedDestination);
 
-          const tripDurationInput = document.getElementById("tripDuration");
-          if (tripDurationInput) {
-            tripDurationInput.addEventListener("change", () => {
-              if (typeof calculateTotal === "function") {
-                calculateTotal();
+                // Update name
+                const nameEl = document.getElementById("summaryName");
+                if (nameEl) {
+                  if (userData.fullName) {
+                    nameEl.textContent = userData.fullName;
+                    console.log('Updated name:', userData.fullName);
+                  } else {
+                    nameEl.textContent = "Traveler";
+                  }
+                }
+
+                // Update destination
+                const destEl = document.getElementById("summaryDestination");
+                if (destEl) {
+                  if (selectedDestination) {
+                    // Make sure destinationsData is available
+                    const destData = window.destinationsData || (typeof destinationsData !== "undefined" ? destinationsData : null);
+                    if (destData && destData[selectedDestination]) {
+                      destEl.textContent = destData[selectedDestination].name;
+                      console.log('Updated destination:', destData[selectedDestination].name);
+                    } else {
+                      destEl.textContent = selectedDestination;
+                      console.log('Using destination key:', selectedDestination);
+                    }
+                  } else {
+                    destEl.textContent = "Not selected";
+                  }
+                }
+
+                // Update price
+                const priceEl = document.getElementById("summaryPrice");
+                if (priceEl) {
+                  if (bookingData.totalPrice) {
+                    const formatPrice = typeof formatCurrency === 'function' ? formatCurrency : (amount) => `$${amount}`;
+                    priceEl.textContent = formatPrice(bookingData.totalPrice);
+                    console.log('Updated price:', bookingData.totalPrice);
+                  } else {
+                    priceEl.textContent = "-";
+                  }
+                }
+
+                // Update travelers
+                const travelersEl = document.getElementById("summaryTravelers");
+                if (travelersEl) {
+                  if (bookingData.numPeople) {
+                    travelersEl.textContent = bookingData.numPeople;
+                    console.log('Updated travelers:', bookingData.numPeople);
+                  } else {
+                    // Try to get from localStorage directly
+                    const numAdults = parseInt(localStorage.getItem('numAdults') || '1');
+                    const numChildren = parseInt(localStorage.getItem('numChildren') || '0');
+                    const totalPeople = numAdults + numChildren;
+                    if (totalPeople > 0) {
+                      travelersEl.textContent = totalPeople;
+                      console.log('Updated travelers from localStorage:', totalPeople);
+                    } else {
+                      travelersEl.textContent = "-";
+                    }
+                  }
+                }
               }
-            });
+              
+              // Wait for destinationsData if needed
+              if (typeof destinationsData !== "undefined") {
+                window.destinationsData = destinationsData;
+                displaySummary();
+              } else {
+                setTimeout(() => {
+                  if (typeof destinationsData !== "undefined") {
+                    window.destinationsData = destinationsData;
+                  }
+                  displaySummary();
+                }, 200);
+              }
+              
+              // Handle start over button
+              const startOverBtn = document.getElementById("startOverBtn");
+              if (startOverBtn) {
+                startOverBtn.addEventListener("click", () => {
+                  localStorage.clear();
+                  showPage('home');
+                  window.location.hash = 'home';
+                });
+              }
+            }
+            
+            // Wait a moment for page to be visible
+            setTimeout(() => {
+              initThankYouPage();
+            }, 100);
           }
+          
+          // Add other page initializations here as needed
+        }
+        
+        // Initialize current page
+        initializePage(hash);
+
+        // Set minimum date for trip date and other booking page setup
+        if (hash.startsWith('booking')) {
+          setTimeout(() => {
+            const tripDateInput = document.getElementById("tripDate");
+            if (tripDateInput) {
+              const today = new Date().toISOString().split('T')[0];
+              tripDateInput.setAttribute('min', today);
+            }
+            
+            const tripDurationInput = document.getElementById("tripDuration");
+            if (tripDurationInput) {
+              tripDurationInput.addEventListener("change", () => {
+                if (typeof calculateTotal === "function") {
+                  calculateTotal();
+                }
+              });
+            }
+            
+            // Update total when people count changes
+            const numAdultsInput = document.getElementById("numAdults");
+            const numChildrenInput = document.getElementById("numChildren");
+            const numInfantsInput = document.getElementById("numInfants");
+            
+            if (numAdultsInput) {
+              numAdultsInput.addEventListener("change", () => {
+                if (typeof calculateTotal === "function") {
+                  calculateTotal();
+                }
+              });
+            }
+            if (numChildrenInput) {
+              numChildrenInput.addEventListener("change", () => {
+                if (typeof calculateTotal === "function") {
+                  calculateTotal();
+                }
+              });
+            }
+            if (numInfantsInput) {
+              numInfantsInput.addEventListener("change", () => {
+                if (typeof calculateTotal === "function") {
+                  calculateTotal();
+                }
+              });
+            }
+          }, 300);
 
           const modalConfirmBtn = document.getElementById("modalConfirmBtn");
           if (modalConfirmBtn) {
@@ -1118,60 +1388,6 @@
           }, 100);
         }
 
-        // Initialize thank you page
-        if (hash === 'thankyou') {
-          updateProgressBarAuto();
-          
-          function displaySummary() {
-            const userData = JSON.parse(localStorage.getItem("userData") || "{}");
-            const bookingData = JSON.parse(localStorage.getItem("bookingData") || "{}");
-            const selectedDestination = localStorage.getItem("selectedDestination");
-
-            if (userData.fullName) {
-              const nameEl = document.getElementById("summaryName");
-              if (nameEl) nameEl.textContent = userData.fullName;
-            }
-
-            if (selectedDestination && window.destinationsData) {
-              const dest = window.destinationsData[selectedDestination];
-              if (dest) {
-                const destEl = document.getElementById("summaryDestination");
-                if (destEl) destEl.textContent = dest.name;
-              }
-            }
-
-            if (bookingData.totalPrice) {
-              const priceEl = document.getElementById("summaryPrice");
-              if (priceEl) priceEl.textContent = formatCurrency(bookingData.totalPrice);
-            }
-
-            if (bookingData.numPeople) {
-              const travelersEl = document.getElementById("summaryTravelers");
-              if (travelersEl) travelersEl.textContent = bookingData.numPeople;
-            }
-          }
-
-          if (typeof destinationsData !== "undefined") {
-            window.destinationsData = destinationsData;
-            displaySummary();
-          } else {
-            setTimeout(() => {
-              if (typeof destinationsData !== "undefined") {
-                window.destinationsData = destinationsData;
-                displaySummary();
-              }
-            }, 100);
-          }
-
-          const startOverBtn = document.getElementById("startOverBtn");
-          if (startOverBtn) {
-            startOverBtn.addEventListener("click", () => {
-              localStorage.clear();
-              showPage('home');
-              window.location.hash = 'home';
-            });
-          }
-        }
       });
     </script>
   </body>

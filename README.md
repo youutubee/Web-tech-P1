@@ -32,9 +32,6 @@ Web tech Project/
 │       └── thankyou.js          # Thank you page
 ├── data/
 │   └── destinations.js    # Destination-specific packages data
-├── utils/
-│   └── images/            # Image assets directory
-│       └── README.md      # Image documentation
 └── README.md              # This file
 ```
 
